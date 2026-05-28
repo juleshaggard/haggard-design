@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { initHeroIntro } from './hero-intro';
+import { initHeadlineReveals, initHeroIntro } from './hero-intro';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -122,6 +122,10 @@ const initMotion = () => {
 
     const heroIntro = initHeroIntro();
     cleanupListeners.push(heroIntro.cleanup);
+    const headlineReveals = initHeadlineReveals(heroIntro.animatedElements);
+    cleanupListeners.push(headlineReveals.cleanup);
+
+    const animatedTextElements = new Set([...heroIntro.animatedElements, ...headlineReveals.animatedElements]);
 
     const firstReadSelectors = [
       '.nav',
@@ -137,7 +141,7 @@ const initMotion = () => {
 
     const firstReadElements = gsap.utils
       .toArray<HTMLElement>(firstReadSelectors.join(', '))
-      .filter((element) => !heroIntro.animatedElements.has(element));
+      .filter((element) => !animatedTextElements.has(element));
 
     if (firstReadElements.length) {
       gsap.set(firstReadElements, { autoAlpha: 0, y: 14 });
@@ -168,7 +172,10 @@ const initMotion = () => {
           '.div-block-31',
         ].join(', '),
       )
-      .filter((element) => !firstReadElements.includes(element) && !isTestimonialCard(element));
+      .filter(
+        (element) =>
+          !firstReadElements.includes(element) && !animatedTextElements.has(element) && !isTestimonialCard(element),
+      );
 
     if (revealElements.length) {
       gsap.set(revealElements, { autoAlpha: 0, y: 22 });
