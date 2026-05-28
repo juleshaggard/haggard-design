@@ -1,0 +1,25 @@
+---
+import { getCollection } from 'astro:content';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RawPage from '../components/RawPage.astro';
+
+const home = (await getCollection('pages')).find((entry) => entry.data.path === '/');
+
+if (!home) {
+  throw new Error('Missing migrated home page content. Run npm run migrate.');
+}
+
+const html = readFileSync(path.join(process.cwd(), 'src', 'content-html', home.data.htmlFile), 'utf-8');
+---
+
+<BaseLayout
+  title={home.data.title}
+  description={home.data.description}
+  bodyClass={home.data.bodyClass}
+  currentPath={home.data.path}
+  ogImage={home.data.ogImage}
+>
+  <RawPage html={html} title={home.data.title} currentPath={home.data.path} />
+</BaseLayout>

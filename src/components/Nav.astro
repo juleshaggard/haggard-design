@@ -1,0 +1,45 @@
+---
+import logoUrl from '../../Logo.svg?url';
+import { siteName } from '../lib/seo';
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+
+const navLinks = [
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/all-work', label: 'Work' },
+  { href: '/about', label: 'About' },
+  { href: 'mailto:hello@haggard.design', label: 'Contact', ariaLabel: `Email ${siteName}` },
+];
+
+const isCurrent = (href: string) => href !== 'mailto:hello@haggard.design' && currentPath === href;
+---
+
+<nav class="nav" aria-label="Primary">
+  <a
+    href="/"
+    class:list={['logo', 'w-inline-block', { 'w--current': currentPath === '/' }]}
+    aria-current={currentPath === '/' ? 'page' : undefined}
+    aria-label={`${siteName} home`}
+  >
+    <img class="navbar-logo" src={logoUrl} alt="" aria-hidden="true" decoding="async" />
+    <span class="logo-wordmark">{siteName}</span>
+  </a>
+  <div class="div-block-29">
+    {
+      navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={['navlink', { 'w--current': isCurrent(link.href) }]}
+          aria-current={isCurrent(link.href) ? 'page' : undefined}
+          aria-label={link.ariaLabel}
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </div>
+</nav>

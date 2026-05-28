@@ -1,0 +1,38 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "description": "Static Astro rebuild of haggard.design.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "migrate": "node scripts/migrate-webflow.mjs && node scripts/rewrite-case-studies.mjs && node scripts/enforce-sentence-case.mjs",
+    "migrate:raw": "node scripts/migrate-webflow.mjs",
+    "rewrite:cases": "node scripts/rewrite-case-studies.mjs && node scripts/enforce-sentence-case.mjs",
+    "sentence-case": "node scripts/enforce-sentence-case.mjs",
+    "optimize:assets": "node scripts/optimize-assets.mjs",
+    "verify": "node scripts/verify-site.mjs",
+    "visual": "node scripts/visual-compare.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@astrojs/check": "^0.9.9",
+    "@fontsource/instrument-sans": "^5.2.8",
+    "@fontsource/instrument-serif": "^5.2.8",
+    "astro": "^6.3.8",
+    "cheerio": "^1.2.0",
+    "gsap": "^3.15.0",
+    "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "pixelmatch": "^7.2.0",
+    "playwright-core": "^1.60.0",
+    "pngjs": "^7.0.0"
+  }
+}

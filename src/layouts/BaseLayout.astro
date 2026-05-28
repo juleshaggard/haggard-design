@@ -1,0 +1,97 @@
+---
+import '@fontsource/instrument-sans/400.css';
+import '@fontsource/instrument-sans/400-italic.css';
+import '@fontsource/instrument-sans/500.css';
+import '@fontsource/instrument-sans/600.css';
+import '@fontsource/instrument-sans/700.css';
+import '@fontsource/instrument-serif/400.css';
+import '@fontsource/instrument-serif/400-italic.css';
+import Nav from '../components/Nav.astro';
+import { noindexPaths, productionOrigin, siteName } from '../lib/seo';
+import '../styles/legacy.css';
+import '../styles/site.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  bodyClass?: string;
+  currentPath: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = 'The best design delivers big answers, little by little. By starting with function, I help lead design teams and projects to natural solutions.',
+  bodyClass = '',
+  currentPath,
+  ogImage = '/assets/site/og-image.webp',
+} = Astro.props;
+
+const canonicalPath = currentPath === '/' ? '' : currentPath;
+const canonicalUrl = new URL(canonicalPath, Astro.site ?? productionOrigin).toString();
+const pageTitle = title.includes('Haggard') || title.length > 48 ? title : `${title} | ${siteName}`;
+const absoluteOgImage = new URL(ogImage, Astro.site ?? productionOrigin).toString();
+const robots = noindexPaths.has(currentPath) ? 'noindex, nofollow' : 'index, follow';
+const normalizedDescription = description.replace(/\s+/g, ' ').trim();
+const metaDescription =
+  normalizedDescription.length <= 160
+    ? normalizedDescription
+    : `${normalizedDescription.slice(0, 157).replace(/\s+\S*$/, '')}...`;
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: siteName,
+  url: Astro.site?.toString() ?? productionOrigin,
+  image: absoluteOgImage,
+  description: metaDescription,
+  areaServed: 'Global',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'San Francisco',
+    addressRegion: 'CA',
+    addressCountry: 'US',
+  },
+  sameAs: ['https://www.haggard.design'],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={metaDescription} />
+    <meta name="robots" content={robots} />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="color-scheme" content="light" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:image" content={absoluteOgImage} />
+    <meta property="og:image:alt" content={pageTitle} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+    <meta name="twitter:image" content={absoluteOgImage} />
+    <meta name="twitter:image:alt" content={pageTitle} />
+    <link rel="icon" href="/assets/site/favicon.webp" type="image/png" />
+    <link rel="apple-touch-icon" href="/assets/site/apple-touch-icon.webp" />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <Nav currentPath={currentPath} />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <script>
+      import '../scripts/site-motion';
+    </script>
+  </body>
+</html>

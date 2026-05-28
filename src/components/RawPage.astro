@@ -1,0 +1,14 @@
+---
+import { enhanceContentHtml } from '../lib/enhanceContent';
+
+interface Props {
+  html: string;
+  title: string;
+  currentPath: string;
+}
+
+const { html, title, currentPath } = Astro.props;
+const enhancedHtml = enhanceContentHtml(html, { title, currentPath });
+---
+
+<Fragment set:html={enhancedHtml} />
