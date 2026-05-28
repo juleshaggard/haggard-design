@@ -729,18 +729,22 @@ a {
 }
 
 section.footer {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   box-sizing: border-box;
-  width: 100%;
+  width: 100vw;
+  margin-right: calc(50% - 50vw);
+  margin-left: calc(50% - 50vw);
   padding: 0 var(--haggard-page-x) clamp(1.4rem, 2vw, 2rem);
   text-align: center;
 }
 
 section.footer .splitpara.jhppara.footerrr {
-  width: 100% !important;
-  max-width: none;
+  justify-self: center;
+  width: fit-content !important;
+  max-width: min(100%, 36rem);
   margin-right: auto !important;
+  margin-bottom: 0 !important;
   margin-left: auto !important;
   color: var(--haggard-muted);
   font-size: 0.95rem !important;
@@ -1262,7 +1266,7 @@ section.footer .splitpara.jhppara.footerrr {
   }
 
   section.footer {
-    justify-content: center !important;
+    place-items: center;
     padding-top: 0;
   }
 
