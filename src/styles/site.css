@@ -586,6 +586,26 @@ a {
   line-height: 1.62 !important;
 }
 
+section.footer {
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 var(--haggard-page-x) clamp(1.4rem, 2vw, 2rem);
+  text-align: center;
+}
+
+section.footer .splitpara.jhppara.footerrr {
+  width: 100% !important;
+  max-width: none;
+  margin-right: auto !important;
+  margin-left: auto !important;
+  color: var(--haggard-muted);
+  font-size: 0.95rem !important;
+  line-height: 1.35 !important;
+  text-align: center !important;
+}
+
 .div-block-28 {
   box-sizing: border-box;
   width: min(100%, 76rem);
