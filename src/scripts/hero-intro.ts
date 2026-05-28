@@ -106,6 +106,7 @@ const shouldRevealHeadline = (headline: HTMLElement, excludedElements: Set<HTMLE
   if (excludedElements.has(headline)) return false;
   if (!headline.textContent?.trim()) return false;
   if (headline.closest('.nav, .skip-link')) return false;
+  if (headline.closest('.projectblocklink, .smallproject')) return false;
   if (headline.matches('.ctalink, .mainline.inver.rightsidecontact.contact')) return false;
 
   return headline.matches('a') || !headline.querySelector('a');
