@@ -4,8 +4,56 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+let motionContext: gsap.Context | undefined;
+let cleanupListeners: Array<() => void> = [];
+let currentPageKey = '';
 
-if (!reduceMotion.matches) {
+const cleanupMotion = () => {
+  cleanupListeners.forEach((cleanup) => cleanup());
+  cleanupListeners = [];
+  motionContext?.revert();
+  motionContext = undefined;
+  ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+};
+
+const addHoverTween = (element: HTMLElement, enterVars: gsap.TweenVars, leaveVars: gsap.TweenVars) => {
+  const onEnter = () => gsap.to(element, enterVars);
+  const onLeave = () => gsap.to(element, leaveVars);
+
+  element.addEventListener('mouseenter', onEnter);
+  element.addEventListener('mouseleave', onLeave);
+  cleanupListeners.push(() => {
+    element.removeEventListener('mouseenter', onEnter);
+    element.removeEventListener('mouseleave', onLeave);
+  });
+};
+
+const initMotion = () => {
+  const pageKey = `${window.location.pathname}${window.location.search}`;
+  if (currentPageKey === pageKey && motionContext) {
+    return;
+  }
+
+  currentPageKey = pageKey;
+  cleanupMotion();
+
+  if (reduceMotion.matches) {
+    return;
+  }
+
+  motionContext = gsap.context(() => {
+    gsap.fromTo(
+      '#main-content',
+      { autoAlpha: 0.92, y: 8 },
+      {
+        autoAlpha: 1,
+        y: 0,
+        clearProps: 'opacity,visibility,transform',
+        duration: 0.38,
+        ease: 'power3.out',
+      },
+    );
+
   const firstReadSelectors = [
     '.nav',
     '.copysection.projectcopy .subline.homesub',
@@ -71,24 +119,32 @@ if (!reduceMotion.matches) {
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const hoverCards = gsap.utils.toArray<HTMLElement>('.projectblocklink, .smallproject, .writingblocks');
     hoverCards.forEach((card) => {
-      card.addEventListener('mouseenter', () => {
-        gsap.to(card, { y: -5, duration: 0.32, ease: 'power3.out', overwrite: 'auto' });
-      });
-      card.addEventListener('mouseleave', () => {
-        gsap.to(card, { y: 0, duration: 0.42, ease: 'power3.out', overwrite: 'auto' });
-      });
+      addHoverTween(
+        card,
+        { y: -5, duration: 0.32, ease: 'power3.out', overwrite: 'auto' },
+        { y: 0, duration: 0.42, ease: 'power3.out', overwrite: 'auto' },
+      );
     });
 
     const hoverLinks = gsap.utils.toArray<HTMLElement>('.navlink, .ctalink');
     hoverLinks.forEach((link) => {
-      link.addEventListener('mouseenter', () => {
-        gsap.to(link, { y: -1, duration: 0.22, ease: 'power2.out', overwrite: 'auto' });
-      });
-      link.addEventListener('mouseleave', () => {
-        gsap.to(link, { y: 0, duration: 0.28, ease: 'power2.out', overwrite: 'auto' });
-      });
+      addHoverTween(
+        link,
+        { y: -1, duration: 0.22, ease: 'power2.out', overwrite: 'auto' },
+        { y: 0, duration: 0.28, ease: 'power2.out', overwrite: 'auto' },
+      );
     });
   }
 
-  window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+    requestAnimationFrame(() => ScrollTrigger.refresh());
+  });
+};
+
+document.addEventListener('astro:before-swap', cleanupMotion);
+document.addEventListener('astro:page-load', initMotion);
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initMotion, { once: true });
+} else {
+  initMotion();
 }
