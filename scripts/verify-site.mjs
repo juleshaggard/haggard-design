@@ -7,6 +7,7 @@ const ROOT = process.cwd();
 const DIST_ROOT = path.join(ROOT, 'dist');
 const CONTENT_ROOT = path.join(ROOT, 'src', 'content');
 const NOINDEX_PATHS = new Set(['/pricing-old-copy', '/projects/beats-by-dre']);
+const BASE_PATH = (process.env.PUBLIC_SITE_BASE ?? '').replace(/\/$/, '');
 
 const blockedStrings = [
   'cdn.prod.website-files.com',
@@ -60,7 +61,7 @@ function outputFileForRoute(routePath) {
 }
 
 function localFileForUrl(url) {
-  const cleanUrl = url.split('#')[0].split('?')[0];
+  const cleanUrl = stripBasePath(url.split('#')[0].split('?')[0]);
 
   if (cleanUrl === '/' || cleanUrl === '') {
     return outputFileForRoute('/');
@@ -71,6 +72,14 @@ function localFileForUrl(url) {
   }
 
   return outputFileForRoute(cleanUrl);
+}
+
+function stripBasePath(url) {
+  if (!BASE_PATH) return url;
+  if (url === BASE_PATH) return '/';
+  if (url.startsWith(`${BASE_PATH}/`)) return url.slice(BASE_PATH.length);
+
+  return url;
 }
 
 function isInternalUrl(href) {

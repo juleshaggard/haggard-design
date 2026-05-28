@@ -1,5 +1,6 @@
 ---
 import logoUrl from '../../Logo.svg?url';
+import { withBasePath } from '../lib/paths';
 import { siteName } from '../lib/seo';
 
 interface Props {
@@ -16,11 +17,12 @@ const navLinks = [
 ];
 
 const isCurrent = (href: string) => href !== 'mailto:hello@haggard.design' && currentPath === href;
+const hrefFor = (href: string) => withBasePath(href);
 ---
 
 <nav class="nav" aria-label="Primary">
   <a
-    href="/"
+    href={hrefFor('/')}
     class:list={['logo', 'w-inline-block', { 'w--current': currentPath === '/' }]}
     aria-current={currentPath === '/' ? 'page' : undefined}
     aria-label={`${siteName} home`}
@@ -32,7 +34,7 @@ const isCurrent = (href: string) => href !== 'mailto:hello@haggard.design' && cu
     {
       navLinks.map((link) => (
         <a
-          href={link.href}
+          href={hrefFor(link.href)}
           class:list={['navlink', { 'w--current': isCurrent(link.href) }]}
           aria-current={isCurrent(link.href) ? 'page' : undefined}
           aria-label={link.ariaLabel}

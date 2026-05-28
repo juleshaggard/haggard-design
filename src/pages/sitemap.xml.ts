@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import type { APIRoute } from 'astro';
+import { absoluteSiteUrl } from '../lib/paths';
 import { noindexPaths, productionOrigin } from '../lib/seo';
 
 function escapeXml(value: string) {
@@ -26,7 +27,7 @@ export const GET: APIRoute = async ({ site }) => {
 
   const urls = routes
     .map((entry) => {
-      const location = new URL(entry.data.path === '/' ? '' : entry.data.path, origin).toString();
+      const location = absoluteSiteUrl(entry.data.path, origin);
       const lastmod = entry.data.lastMigrated ? `<lastmod>${escapeXml(entry.data.lastMigrated)}</lastmod>` : '';
 
       return `<url><loc>${escapeXml(location)}</loc>${lastmod}</url>`;

@@ -1,6 +1,7 @@
 import * as cheerio from 'cheerio';
 import type { CheerioAPI } from 'cheerio';
 import type { Element } from 'domhandler';
+import { withBasePath } from './paths';
 import { noindexPaths, siteName } from './seo';
 
 interface EnhanceContentOptions {
@@ -142,6 +143,44 @@ function enhanceLinks($: CheerioAPI) {
   });
 }
 
+function rewriteSrcset(srcset: string) {
+  return srcset
+    .split(',')
+    .map((candidate) => {
+      const trimmed = candidate.trim();
+      const [url, ...descriptor] = trimmed.split(/\s+/);
+      const rewrittenUrl = withBasePath(url);
+
+      return [rewrittenUrl, ...descriptor].join(' ');
+    })
+    .join(', ');
+}
+
+function rewriteStyleUrls(style: string) {
+  return style.replace(/url\((['"]?)(\/(?!\/)[^'")]+)\1\)/g, (_, quote: string, url: string) => {
+    return `url(${quote}${withBasePath(url)}${quote})`;
+  });
+}
+
+function rewriteRootRelativeUrls($: CheerioAPI) {
+  const urlAttributes = ['href', 'src', 'poster', 'data-poster-url'];
+
+  $('*').each((_, element) => {
+    const node = $(element);
+
+    urlAttributes.forEach((attribute) => {
+      const value = node.attr(attribute);
+      if (value) node.attr(attribute, withBasePath(value));
+    });
+
+    const srcset = node.attr('srcset');
+    if (srcset) node.attr('srcset', rewriteSrcset(srcset));
+
+    const style = node.attr('style');
+    if (style) node.attr('style', rewriteStyleUrls(style));
+  });
+}
+
 function enhanceHeadings($: CheerioAPI) {
   $('a.projectblocklink h1.projecttitle, a.smallproject h1.projecttitle, a.projectblocklink h1.projecttitleworkpage, a.smallproject h1.projecttitleworkpage').each(
     (_, element) => {
@@ -181,6 +220,7 @@ export function enhanceContentHtml(html: string, options: EnhanceContentOptions)
   enhanceVideos($);
   enhanceLinks($);
   stripEmptyNoise($);
+  rewriteRootRelativeUrls($);
 
   if (noindexPaths.has(options.currentPath)) {
     $('[aria-current="page"]').removeAttr('aria-current');

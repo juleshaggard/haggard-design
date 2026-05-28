@@ -8,6 +8,7 @@ import '@fontsource/instrument-serif/400.css';
 import '@fontsource/instrument-serif/400-italic.css';
 import { ClientRouter } from 'astro:transitions';
 import Nav from '../components/Nav.astro';
+import { absoluteSiteUrl, withBasePath } from '../lib/paths';
 import { noindexPaths, productionOrigin, siteName } from '../lib/seo';
 import '../styles/legacy.css';
 import '../styles/site.css';
@@ -29,9 +30,9 @@ const {
 } = Astro.props;
 
 const canonicalPath = currentPath === '/' ? '' : currentPath;
-const canonicalUrl = new URL(canonicalPath, Astro.site ?? productionOrigin).toString();
+const canonicalUrl = absoluteSiteUrl(canonicalPath, Astro.site ?? new URL(productionOrigin));
 const pageTitle = title.includes('Haggard') || title.length > 48 ? title : `${title} | ${siteName}`;
-const absoluteOgImage = new URL(ogImage, Astro.site ?? productionOrigin).toString();
+const absoluteOgImage = absoluteSiteUrl(ogImage, Astro.site ?? new URL(productionOrigin));
 const robots = noindexPaths.has(currentPath) ? 'noindex, nofollow' : 'index, follow';
 const normalizedDescription = description.replace(/\s+/g, ' ').trim();
 const metaDescription =
@@ -42,7 +43,7 @@ const schema = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
   name: siteName,
-  url: Astro.site?.toString() ?? productionOrigin,
+  url: absoluteSiteUrl('/', Astro.site ?? new URL(productionOrigin)),
   image: absoluteOgImage,
   description: metaDescription,
   areaServed: 'Global',
@@ -81,8 +82,8 @@ const schema = {
     <meta name="twitter:description" content={metaDescription} />
     <meta name="twitter:image" content={absoluteOgImage} />
     <meta name="twitter:image:alt" content={pageTitle} />
-    <link rel="icon" href="/assets/site/favicon.webp" type="image/png" />
-    <link rel="apple-touch-icon" href="/assets/site/apple-touch-icon.webp" />
+    <link rel="icon" href={withBasePath('/assets/site/favicon.webp')} type="image/png" />
+    <link rel="apple-touch-icon" href={withBasePath('/assets/site/apple-touch-icon.webp')} />
     <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
     <ClientRouter fallback="animate" />
   </head>
