@@ -80,6 +80,9 @@ main:focus {
   z-index: 1000;
   top: 0.85rem;
   left: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
   padding: 0.72rem 0.95rem;
   color: #fff;
   background: var(--haggard-ink);
@@ -195,7 +198,7 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2.35rem;
+  min-height: 2.75rem;
   padding: 0.65rem 0.95rem !important;
   border-radius: 999px;
   font-size: 0.94rem !important;
@@ -567,8 +570,27 @@ a {
 
 .homecontainer > .aboutintro.hp.herohp .bold-text-14.smalltext,
 .homecontainer > .aboutintro.hp.herohp .link-9 {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
   font-size: inherit !important;
   line-height: inherit !important;
+}
+
+.bigthinks {
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+.bigthinklink {
+  display: block;
+  width: fit-content;
+  max-width: min(100%, 46rem);
+  min-height: 2.75rem;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0.42rem 0;
+  line-height: 1.15;
 }
 
 .tiny {
@@ -983,6 +1005,14 @@ section.footer .splitpara.jhppara.footerrr {
     font-size: clamp(2.5rem, 4.7vw, 3.5rem) !important;
     line-height: 1.02 !important;
   }
+
+  .list,
+  .list li,
+  .list-item-3,
+  .list-item-4 {
+    font-size: 0.95rem !important;
+    line-height: 1.45 !important;
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -1028,6 +1058,10 @@ section.footer .splitpara.jhppara.footerrr {
     min-height: 2.25rem;
     padding: 0.6rem 0.78rem !important;
     font-size: 0.92rem !important;
+  }
+
+  .navlink {
+    min-height: 2.75rem;
   }
 
   .ctalink {
@@ -1314,7 +1348,7 @@ section.footer .splitpara.jhppara.footerrr {
   .navlink,
   .ctalink {
     width: auto;
-    min-height: 2.25rem;
+    min-height: 2.75rem;
     padding: 0.6rem 0.74rem !important;
     font-size: 0.94rem !important;
   }
@@ -1428,7 +1462,7 @@ section.footer .splitpara.jhppara.footerrr {
   }
 
   .navlink {
-    min-height: 2.08rem;
+    min-height: 2.75rem;
     padding-right: 0.56rem !important;
     padding-left: 0.56rem !important;
     font-size: 0.88rem !important;
