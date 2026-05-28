@@ -72,7 +72,6 @@ const splitHeadline = (headline: HTMLElement) => {
 
 export const initHeroIntro = (): HeroIntro => {
   const animatedElements = new Set<HTMLElement>();
-  const cleanups: Array<() => void> = [];
   const hero = document.querySelector<HTMLElement>(heroSelector);
   const headline = hero?.querySelector<HTMLElement>(headlineSelector);
 
@@ -141,48 +140,8 @@ export const initHeroIntro = (): HeroIntro => {
     );
   }
 
-  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    let lastWave = 0;
-    const wave = (from: 'center' | 'start' = 'center') => {
-      const now = performance.now();
-      if (now - lastWave < 850) return;
-
-      lastWave = now;
-      gsap.fromTo(
-        chars,
-        {
-          yPercent: (index) => (index % 2 === 0 ? -9 : 7),
-          rotation: (index) => (index % 2 === 0 ? -1.2 : 1.2),
-        },
-        {
-          yPercent: 0,
-          rotation: 0,
-          duration: 0.72,
-          ease: 'power3.out',
-          stagger: {
-            amount: 0.38,
-            from,
-          },
-          overwrite: 'auto',
-          clearProps: 'transform',
-        },
-      );
-    };
-
-    const onPointerEnter = () => wave('center');
-    const onFocus = () => wave('start');
-
-    headline.addEventListener('pointerenter', onPointerEnter);
-    headline.addEventListener('focus', onFocus);
-
-    cleanups.push(() => {
-      headline.removeEventListener('pointerenter', onPointerEnter);
-      headline.removeEventListener('focus', onFocus);
-    });
-  }
-
   return {
     animatedElements,
-    cleanup: () => cleanups.forEach((cleanup) => cleanup()),
+    cleanup: () => undefined,
   };
 };
