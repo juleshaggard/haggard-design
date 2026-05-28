@@ -976,6 +976,19 @@ section.footer .splitpara.jhppara.footerrr {
   backface-visibility: hidden;
 }
 
+@media screen and (max-width: 1199px) {
+  html,
+  body,
+  body.maincontent,
+  body.writingbody,
+  main,
+  .homecontainer,
+  .writingcontainer {
+    background: #fff !important;
+    background-color: #fff !important;
+  }
+}
+
 @media screen and (max-width: 991px) {
   :root {
     --haggard-page-x: 2rem;
