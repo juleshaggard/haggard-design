@@ -228,7 +228,10 @@ a {
 }
 
 .homecontainer > .aboutintro.hp.herohp {
+  display: flex !important;
+  box-sizing: border-box;
   flex-direction: column !important;
+  justify-content: center !important;
   align-items: center !important;
   gap: clamp(1.15rem, 2vw, 1.75rem);
   width: 100%;
@@ -256,7 +259,10 @@ a {
 }
 
 .homecontainer .aboutintro.hp.herohp.lowerdown:not(.testimonials) {
+  display: flex !important;
+  box-sizing: border-box;
   flex-direction: column !important;
+  justify-content: center !important;
   align-items: center !important;
   gap: clamp(1.15rem, 2vw, 1.75rem);
   width: min(100%, 76rem);
@@ -296,12 +302,48 @@ a {
 }
 
 .homecontainer > .aboutintro.pricing-coin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding-top: clamp(6.75rem, 11vw, 8.5rem);
   padding-bottom: clamp(0.4rem, 1vw, 0.9rem);
 }
 
+.homecontainer > .aboutintro:not(.hp):not(.pricing-coin) {
+  display: flex !important;
+  box-sizing: border-box;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: clamp(1.35rem, 2.2vw, 2rem);
+  width: min(100%, 72rem);
+  margin-right: auto !important;
+  margin-left: auto !important;
+  padding: clamp(5.75rem, 9vw, 7.75rem) var(--haggard-page-x) clamp(4rem, 6vw, 5.25rem) !important;
+  text-align: center;
+}
+
+.homecontainer > .aboutintro:not(.hp):not(.pricing-coin) .flex-block {
+  box-sizing: border-box;
+  align-items: center;
+  width: min(100%, 48rem);
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+.homecontainer > .aboutintro:not(.hp):not(.pricing-coin) .paragraph-4 {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+}
+
 .homecontainer .aboutintro.hp.herohp.lowerdown.testimonials {
   align-items: flex-start !important;
+  justify-content: flex-start !important;
   box-sizing: border-box;
   scroll-margin-top: clamp(2rem, 5vw, 4rem);
   width: min(100%, 74rem);
@@ -472,6 +514,8 @@ a {
 }
 
 .leftcol .copysection.projectcopy {
+  align-items: center !important;
+  justify-content: center !important;
   min-height: auto;
   padding: clamp(7rem, 10vw, 8rem) var(--haggard-page-x) clamp(3rem, 5vw, 4rem) !important;
 }
@@ -514,6 +558,48 @@ a {
   font-family: "Instrument Sans", sans-serif;
   font-size: 1.08rem !important;
   line-height: 1.62 !important;
+}
+
+.div-block-28 {
+  box-sizing: border-box;
+  width: min(100%, 76rem);
+  margin-right: auto !important;
+  margin-left: auto !important;
+  padding-right: var(--haggard-page-x);
+  padding-left: var(--haggard-page-x);
+}
+
+.div-block-27 {
+  align-items: flex-start !important;
+  justify-content: center !important;
+  gap: clamp(2.25rem, 4.5vw, 5rem) !important;
+  width: 100%;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
+.div-block-11.twoup {
+  box-sizing: border-box;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  gap: clamp(2.25rem, 4.5vw, 5rem) !important;
+  width: 100%;
+  padding-right: 0 !important;
+}
+
+.div-block-11.twoup > .div-block-31 {
+  flex: 1 1 0;
+  max-width: 34rem;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.div-block-27.second {
+  margin-top: clamp(2.6rem, 4vw, 4rem) !important;
+}
+
+.div-block-31 .heading-4 {
+  margin-top: 0 !important;
 }
 
 .splitpara,
