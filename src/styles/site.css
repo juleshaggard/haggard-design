@@ -844,46 +844,106 @@ section.footer .splitpara.jhppara.footerrr {
     --haggard-page-x: 1.4rem;
   }
 
+  body.maincontent {
+    padding-top: 0 !important;
+  }
+
   .nav {
-    padding: 1rem var(--haggard-page-x) 0.75rem !important;
+    position: relative !important;
+    inset: auto !important;
+    flex-direction: column;
+    align-items: center !important;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0.95rem var(--haggard-page-x) 0.75rem !important;
+  }
+
+  .logo {
+    gap: 0.58rem;
+  }
+
+  .navbar-logo {
+    width: clamp(1.95rem, 8vw, 2.25rem);
+  }
+
+  .logo-wordmark {
+    font-size: clamp(1.18rem, 4.8vw, 1.38rem);
   }
 
   .div-block-29 {
+    flex-wrap: wrap;
     width: 100%;
-    justify-content: flex-start;
+    justify-content: center;
+    gap: 0.15rem 0.25rem;
+  }
+
+  .navlink,
+  .ctalink {
+    min-height: 2.25rem;
+    padding: 0.6rem 0.78rem !important;
+    font-size: 0.92rem !important;
+  }
+
+  .homecontainer {
+    flex-direction: column !important;
+    overflow: visible;
   }
 
   .heading-3.topheader.herohero {
-    max-width: 7.4em;
-    font-size: clamp(4.2rem, 14vw, 5.5rem) !important;
-    line-height: 0.95 !important;
+    max-width: 6.7em;
+    font-size: clamp(3.35rem, 13.5vw, 4.8rem) !important;
+    line-height: 0.96 !important;
     white-space: normal;
   }
 
   .heading-3.topheader.herohero.downher {
-    max-width: 7.8em;
-    font-size: clamp(3.75rem, 12.5vw, 5rem) !important;
+    max-width: 7.1em;
+    font-size: clamp(3rem, 12vw, 4.25rem) !important;
   }
 
   .homecontainer > .aboutintro.hp.herohp {
-    gap: 1.25rem;
+    min-height: auto;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    gap: 1rem;
+    padding-top: clamp(2.35rem, 9vw, 3.5rem) !important;
+    padding-bottom: clamp(2.6rem, 10vw, 4rem) !important;
+  }
+
+  .homecontainer .aboutintro.hp.herohp.lowerdown:not(.testimonials) {
+    width: 100%;
+    padding-top: clamp(3.2rem, 11vw, 4.5rem) !important;
+    padding-bottom: clamp(3rem, 10vw, 4.25rem) !important;
+  }
+
+  .homecontainer > .aboutintro:not(.hp):not(.pricing-coin) {
+    width: 100%;
+    padding-top: clamp(3rem, 10vw, 4.5rem) !important;
+    padding-bottom: clamp(2.75rem, 9vw, 4rem) !important;
+  }
+
+  .homecontainer > .aboutintro.pricing-coin {
+    padding-top: clamp(2.2rem, 8vw, 3.25rem) !important;
+    padding-bottom: 0.75rem !important;
   }
 
   .homecontainer .aboutintro.hp.herohp.lowerdown.testimonials {
     width: 100%;
-    margin-top: 5rem !important;
-    padding-bottom: 1rem !important;
+    margin-top: 4rem !important;
+    padding-bottom: 0.65rem !important;
   }
 
   .homecontainer .aboutintro.hp.herohp.lowerdown.testimonials .heading-3.topheader.herohero {
     max-width: 7em;
-    font-size: clamp(3.85rem, 14vw, 5.6rem) !important;
+    font-size: clamp(3.35rem, 13vw, 4.8rem) !important;
   }
 
   .homecontainer .aboutintro.hp.herohp.lowerdown.testimonials + .grid {
     grid-template-columns: 1fr;
     width: 100%;
-    margin-bottom: 5.5rem !important;
+    row-gap: 2.25rem;
+    margin-bottom: 4.5rem !important;
+    padding-top: 1.25rem;
   }
 
   .homecontainer .aboutintro.hp.herohp.lowerdown.testimonials + .grid .paragraph-5,
@@ -897,8 +957,89 @@ section.footer .splitpara.jhppara.footerrr {
     line-height: 1.24 !important;
   }
 
+  .homecontainer > .aboutintro.hp.herohp .flex-block-3 {
+    gap: 1rem;
+  }
+
+  .homecontainer > .aboutintro.hp.herohp .splitpara.jhppara {
+    font-size: 1rem !important;
+    line-height: 1.46 !important;
+  }
+
+  .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing,
+  .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing.lowerdown {
+    max-width: 7.4em;
+    margin-top: 0 !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+    text-align: center !important;
+  }
+
+  .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing {
+    margin-bottom: clamp(1.8rem, 8vw, 2.8rem) !important;
+    font-size: clamp(3.15rem, 13vw, 4.35rem) !important;
+    line-height: 0.96 !important;
+  }
+
+  .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing.lowerdown {
+    margin-bottom: 1rem !important;
+    font-size: clamp(2.9rem, 12vw, 3.85rem) !important;
+    line-height: 0.98 !important;
+  }
+
+  .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing.lowerdown.svs {
+    padding-left: 0 !important;
+    text-align: center !important;
+  }
+
+  .div-block-28 {
+    padding-right: var(--haggard-page-x) !important;
+    padding-left: var(--haggard-page-x) !important;
+  }
+
+  .div-block-27,
+  .div-block-11.twoup {
+    gap: clamp(2rem, 8vw, 3rem) !important;
+  }
+
+  .div-block-27.second {
+    margin-top: clamp(2rem, 8vw, 3rem) !important;
+  }
+
+  .leftcol .copysection.projectcopy {
+    margin-top: 0 !important;
+    padding-top: clamp(2.4rem, 9vw, 3.4rem) !important;
+    padding-bottom: clamp(2.4rem, 9vw, 3.4rem) !important;
+  }
+
+  .copysection.projectcopy .div-block-12 {
+    max-width: 40rem;
+  }
+
   .mainline.smallhomesection {
-    font-size: 2.7rem !important;
+    max-width: 9em;
+    font-size: clamp(2.35rem, 10.5vw, 3rem) !important;
+    line-height: 0.98 !important;
+  }
+
+  .rightcol {
+    margin-top: 0 !important;
+    padding-right: var(--haggard-page-x) !important;
+    padding-left: var(--haggard-page-x) !important;
+  }
+
+  .writingcontainer .rightcol {
+    margin-top: 0 !important;
+  }
+
+  .projectblock {
+    margin-bottom: clamp(4rem, 14vw, 6rem) !important;
+  }
+
+  .projectblocklink,
+  .smallproject,
+  .writingblocks {
+    margin-bottom: 1.4rem !important;
   }
 
   .splitpara,
@@ -920,51 +1061,83 @@ section.footer .splitpara.jhppara.footerrr {
   .posttext h1 {
     font-size: 3rem !important;
   }
+
+  .posttext {
+    width: 100%;
+    max-width: 43rem;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .writingindex {
+    margin-top: 3rem !important;
+  }
+
+  .flex-block-5 {
+    margin-top: clamp(2.5rem, 10vw, 4rem) !important;
+  }
+
+  .flex-block-6 {
+    margin-top: 1.25rem !important;
+  }
+
+  section.footer {
+    justify-content: center !important;
+    padding-top: 0;
+  }
+
+  section.footer .splitpara.jhppara.footerrr {
+    text-align: center !important;
+  }
 }
 
 @media screen and (max-width: 479px) {
   .nav {
-    position: absolute;
-    align-items: flex-start;
+    position: relative !important;
+    align-items: center !important;
+    padding-top: 0.85rem !important;
+    padding-bottom: 0.7rem !important;
   }
 
   .navbar-logo {
-    width: 2.35rem;
+    width: 2rem;
   }
 
   .logo-wordmark {
-    font-size: 1.35rem;
+    font-size: 1.22rem;
   }
 
   .heading-3.topheader.herohero {
-    max-width: 6.6em;
-    font-size: clamp(3.55rem, 15vw, 4.35rem) !important;
+    max-width: 6.25em;
+    font-size: clamp(3.05rem, 13vw, 3.55rem) !important;
   }
 
   .heading-3.topheader.herohero.downher {
-    max-width: 7em;
-    font-size: clamp(3rem, 13.5vw, 3.8rem) !important;
+    max-width: 6.7em;
+    font-size: clamp(2.7rem, 11.5vw, 3.25rem) !important;
   }
 
   .homecontainer > .aboutintro.hp.herohp .flex-block-7 {
-    flex-direction: column !important;
+    flex-direction: row !important;
+    gap: 0.75rem 1rem !important;
   }
 
   .homecontainer > .aboutintro.hp.herohp .splitpara.jhppara.smallpara {
-    text-align: center !important;
+    max-width: 16rem;
+    text-align: left !important;
   }
 
   .navlink,
   .ctalink {
     width: auto;
-    min-height: 2.5rem;
-    padding: 0.72rem 0.92rem !important;
+    min-height: 2.25rem;
+    padding: 0.6rem 0.74rem !important;
     font-size: 0.94rem !important;
   }
 
   .leftcol .copysection.projectcopy {
-    margin-top: 6rem !important;
-    padding: 3rem var(--haggard-page-x) 3.5rem !important;
+    margin-top: 0 !important;
+    padding: 2.35rem var(--haggard-page-x) 2.65rem !important;
   }
 
   .subline.homesub {
@@ -973,22 +1146,103 @@ section.footer .splitpara.jhppara.footerrr {
   }
 
   .mainline.smallhomesection {
-    max-width: 10em;
+    max-width: 8.7em;
     margin-bottom: 1rem !important;
-    font-size: 2.45rem !important;
-    line-height: 1 !important;
+    font-size: clamp(2.15rem, 9.7vw, 2.55rem) !important;
+    line-height: 0.98 !important;
   }
 
   .projecttitle.headertitledesc.lefty.brand-leader.hp {
-    font-size: 4rem !important;
+    font-size: clamp(3.1rem, 13vw, 3.9rem) !important;
   }
 
   .projecttitle.headertitledesc.lefty.brand-leader.morework {
-    font-size: 3.4rem !important;
+    font-size: clamp(3rem, 12vw, 3.5rem) !important;
   }
 
   .homepageprojects.center {
     font-size: 0.95rem !important;
+  }
+
+  .homecontainer > .aboutintro.hp.herohp {
+    padding-top: 2.15rem !important;
+    padding-bottom: 2.6rem !important;
+  }
+
+  .homecontainer .aboutintro.hp.herohp.lowerdown:not(.testimonials) {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  .homecontainer > .aboutintro:not(.hp):not(.pricing-coin) {
+    padding-top: 2.8rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  .homecontainer > .aboutintro.pricing-coin {
+    padding-top: 2rem !important;
+  }
+
+  .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing {
+    max-width: 7em;
+    font-size: clamp(2.9rem, 12.6vw, 3.55rem) !important;
+  }
+
+  .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing.lowerdown {
+    max-width: 7.6em;
+    font-size: clamp(2.55rem, 11.2vw, 3.15rem) !important;
+  }
+
+  .paragraph-4,
+  .posttext,
+  .posttext p {
+    max-width: 36rem;
+  }
+
+  .heading-4,
+  .posttext h2 {
+    font-size: clamp(2rem, 9.5vw, 2.35rem) !important;
+    line-height: 1.03 !important;
+  }
+
+  .posttext h1 {
+    font-size: clamp(2.7rem, 11.5vw, 3rem) !important;
+    line-height: 0.98 !important;
+  }
+
+  .writingindex {
+    margin-top: 2.5rem !important;
+  }
+
+  .flex-block-5 {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .image-18 {
+    width: min(78vw, 20rem) !important;
+  }
+}
+
+@media screen and (max-width: 359px) {
+  :root {
+    --haggard-page-x: 1rem;
+  }
+
+  .nav {
+    padding-right: 0.75rem !important;
+    padding-left: 0.75rem !important;
+  }
+
+  .div-block-29 {
+    gap: 0.12rem;
+  }
+
+  .navlink {
+    min-height: 2.08rem;
+    padding-right: 0.56rem !important;
+    padding-left: 0.56rem !important;
+    font-size: 0.88rem !important;
   }
 }
 
