@@ -208,6 +208,48 @@ a {
     transform 180ms var(--haggard-fast);
 }
 
+.ctalink {
+  position: relative;
+  isolation: isolate;
+  gap: 0.55rem;
+  min-height: 2.75rem;
+  padding: 0.78rem 1.15rem 0.78rem 1.25rem !important;
+  color: #fff;
+  background: var(--haggard-ink);
+  border: 1px solid var(--haggard-ink);
+  box-shadow:
+    0 0.72rem 1.8rem rgba(17, 16, 15, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  overflow: hidden;
+}
+
+.ctalink::before {
+  position: absolute;
+  inset: 0.2rem;
+  z-index: -1;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: inherit;
+  content: "";
+  pointer-events: none;
+  transition:
+    border-color 180ms var(--haggard-fast),
+    transform 180ms var(--haggard-fast);
+}
+
+.ctalink::after {
+  flex: 0 0 auto;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  content: "";
+  opacity: 0.9;
+  transform: rotate(45deg);
+  transition:
+    opacity 180ms var(--haggard-fast),
+    transform 180ms var(--haggard-fast);
+}
+
 .navlink:hover,
 .navlink.w--current {
   color: #fff;
@@ -224,7 +266,30 @@ a {
 }
 
 .ctalink:hover {
-  transform: translateY(-1px);
+  color: var(--haggard-ink);
+  background: #fff;
+  border-color: var(--haggard-ink);
+  box-shadow:
+    0 1rem 2.35rem rgba(17, 16, 15, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+.ctalink:hover::before {
+  border-color: rgba(17, 16, 15, 0.16);
+  transform: scale(0.97);
+}
+
+.ctalink:hover::after {
+  opacity: 1;
+  transform: translateX(0.16rem) rotate(45deg);
+}
+
+.ctalink:active {
+  box-shadow:
+    0 0.42rem 1.2rem rgba(17, 16, 15, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  transform: translateY(0);
 }
 
 .homecontainer > .aboutintro.hp.herohp {
@@ -961,6 +1026,11 @@ section.footer .splitpara.jhppara.footerrr {
     font-size: 0.92rem !important;
   }
 
+  .ctalink {
+    min-height: 2.75rem;
+    padding: 0.78rem 1.08rem 0.78rem 1.16rem !important;
+  }
+
   .homecontainer {
     flex-direction: column !important;
     overflow: visible;
@@ -1243,6 +1313,11 @@ section.footer .splitpara.jhppara.footerrr {
     min-height: 2.25rem;
     padding: 0.6rem 0.74rem !important;
     font-size: 0.94rem !important;
+  }
+
+  .ctalink {
+    min-height: 2.75rem;
+    padding: 0.78rem 1rem 0.78rem 1.1rem !important;
   }
 
   .leftcol .copysection.projectcopy {

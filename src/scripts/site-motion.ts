@@ -205,7 +205,7 @@ const initMotion = () => {
         );
       });
 
-      const hoverLinks = gsap.utils.toArray<HTMLElement>('.navlink, .ctalink');
+      const hoverLinks = gsap.utils.toArray<HTMLElement>('.navlink');
       hoverLinks.forEach((link) => {
         addHoverTween(
           link,
