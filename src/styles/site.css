@@ -282,13 +282,14 @@ a {
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
-  width: min(100%, 43rem) !important;
+  width: min(100%, 46.5rem) !important;
   margin-right: auto !important;
   margin-left: auto !important;
   text-align: center !important;
 }
 
 .homecontainer .aboutintro.hp.herohp.lowerdown:not(.testimonials) .splitpara.jhppara {
+  max-width: 46.5rem;
   margin-right: auto !important;
   margin-left: auto !important;
   text-align: center !important;
@@ -515,6 +516,17 @@ a {
   line-height: 1.62 !important;
 }
 
+.splitpara,
+.paragraph-3,
+.paragraph-4,
+.paragraph-5,
+.posttext p,
+.posttext li,
+.homepageprojects.center,
+.tiny {
+  text-wrap: pretty;
+}
+
 .projectblock,
 .projectblocklink,
 .smallproject,
@@ -687,6 +699,11 @@ a {
 
   .projecttitle.headertitledesc.lefty.brand-leader.morework {
     font-size: 5rem !important;
+  }
+
+  .div-block-11.twoup .heading-4 {
+    font-size: clamp(2.5rem, 4.7vw, 3.5rem) !important;
+    line-height: 1.02 !important;
   }
 }
 
