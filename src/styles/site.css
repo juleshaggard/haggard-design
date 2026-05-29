@@ -571,16 +571,12 @@ a {
   left: 0;
   z-index: 60;
   display: block;
-  width: 1em;
-  height: 1em;
-  color: oklch(67% 0.24 355);
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
-  font-size: clamp(1.05rem, 1.4vw, 1.45rem);
-  line-height: 1;
+  width: clamp(1.25rem, 1.7vw, 1.8rem);
+  height: clamp(1.25rem, 1.7vw, 1.8rem);
+  object-fit: contain;
   pointer-events: none;
   user-select: none;
   transform: translate3d(0, 0, 0);
-  text-shadow: 0 0.35rem 1rem oklch(67% 0.24 355 / 0.14);
   will-change: opacity, transform, filter;
 }
 

@@ -43,8 +43,13 @@ const initTestimonialHeartParticles = (grid: HTMLElement) => {
   const activeHearts = new Set<HTMLElement>();
   const activeTweens = new Set<gsap.core.Animation>();
   const heartTweens = new Map<HTMLElement, gsap.core.Animation>();
-  const heartCharacters = ['💗', '💖', '💕'];
+  const heartSprites = ['/assets/hearts/heart01.png', '/assets/hearts/heart02.png', '/assets/hearts/heart03.png'];
   let lastEmit = 0;
+
+  heartSprites.forEach((src) => {
+    const image = new Image();
+    image.src = src;
+  });
 
   const getExpandedBandRect = (element: HTMLElement) => {
     const rect = element.getBoundingClientRect();
@@ -92,10 +97,12 @@ const initTestimonialHeartParticles = (grid: HTMLElement) => {
       if (oldestHeart) removeHeart(oldestHeart);
     }
 
-    const heart = document.createElement('span');
+    const heart = document.createElement('img');
     heart.className = 'testimonial-heart-particle';
     heart.setAttribute('aria-hidden', 'true');
-    heart.textContent = gsap.utils.random(heartCharacters);
+    heart.alt = '';
+    heart.decoding = 'async';
+    heart.src = gsap.utils.random(heartSprites);
     document.body.append(heart);
     activeHearts.add(heart);
 
