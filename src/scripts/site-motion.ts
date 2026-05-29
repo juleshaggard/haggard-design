@@ -212,24 +212,241 @@ const initMarketAttentionInteraction = () => {
 
   const xSetters = pupils.map((pupil) => gsap.quickTo(pupil, 'x', { duration: 0.24, ease: 'power3.out' }));
   const ySetters = pupils.map((pupil) => gsap.quickTo(pupil, 'y', { duration: 0.24, ease: 'power3.out' }));
-  const activeGlitters = new Set<HTMLElement>();
-  const activeTweens = new Set<gsap.core.Animation>();
-  const glitterTweens = new Map<HTMLElement, gsap.core.Animation>();
-  const glitterColors = [
-    'oklch(0.84 0.13 345)',
-    'oklch(0.91 0.09 338)',
-    'oklch(0.73 0.08 342)',
-    'oklch(0.97 0.025 330)',
-  ];
-  let lastEmit = 0;
+
+  const butterfly = document.createElement('div');
+  butterfly.className = 'attention-butterfly-cursor';
+  butterfly.setAttribute('aria-hidden', 'true');
+
+  const butterflyShadow = document.createElement('div');
+  butterflyShadow.className = 'attention-butterfly-cursor-shadow';
+  butterflyShadow.setAttribute('aria-hidden', 'true');
+
+  const butterflyShadowScaler = document.createElement('div');
+  butterflyShadowScaler.className = 'attention-butterfly-cursor-shadow__scale';
+
+  const butterflyShadowInner = document.createElement('div');
+  butterflyShadowInner.className = 'attention-butterfly-cursor-shadow__inner';
+
+  const butterflyScaler = document.createElement('div');
+  butterflyScaler.className = 'attention-butterfly-cursor__scale';
+
+  const butterflyInner = document.createElement('div');
+  butterflyInner.className = 'attention-butterfly-cursor__inner';
+
+  const leftWing = document.createElement('img');
+  leftWing.className = 'attention-butterfly-cursor__wing attention-butterfly-cursor__wing--left';
+  leftWing.src = '/assets/butterfly/left-wing.png';
+  leftWing.alt = '';
+  leftWing.decoding = 'async';
+
+  const rightWing = document.createElement('img');
+  rightWing.className = 'attention-butterfly-cursor__wing attention-butterfly-cursor__wing--right';
+  rightWing.src = '/assets/butterfly/right-wing.png';
+  rightWing.alt = '';
+  rightWing.decoding = 'async';
+
+  const body = document.createElement('img');
+  body.className = 'attention-butterfly-cursor__body';
+  body.src = '/assets/butterfly/body.png';
+  body.alt = '';
+  body.decoding = 'async';
+
+  const shadowLeftWing = document.createElement('img');
+  shadowLeftWing.className =
+    'attention-butterfly-cursor__wing attention-butterfly-cursor__wing--left attention-butterfly-cursor-shadow__piece';
+  shadowLeftWing.src = '/assets/butterfly/left-wing.png';
+  shadowLeftWing.alt = '';
+  shadowLeftWing.decoding = 'async';
+
+  const shadowRightWing = document.createElement('img');
+  shadowRightWing.className =
+    'attention-butterfly-cursor__wing attention-butterfly-cursor__wing--right attention-butterfly-cursor-shadow__piece';
+  shadowRightWing.src = '/assets/butterfly/right-wing.png';
+  shadowRightWing.alt = '';
+  shadowRightWing.decoding = 'async';
+
+  const shadowBody = document.createElement('img');
+  shadowBody.className = 'attention-butterfly-cursor__body attention-butterfly-cursor-shadow__piece';
+  shadowBody.src = '/assets/butterfly/body.png';
+  shadowBody.alt = '';
+  shadowBody.decoding = 'async';
+
+  butterflyInner.append(leftWing, rightWing, body);
+  butterflyShadowInner.append(shadowLeftWing, shadowRightWing, shadowBody);
+  butterflyShadowScaler.append(butterflyShadowInner);
+  butterflyShadow.append(butterflyShadowScaler);
+  butterflyScaler.append(butterflyInner);
+  butterfly.append(butterflyScaler);
+  document.body.append(butterflyShadow, butterfly);
+
+  gsap.set(butterfly, { autoAlpha: 0, xPercent: -50, yPercent: -50, rotation: 0 });
+  gsap.set(butterflyScaler, { scale: 0.58, transformOrigin: '50% 50%' });
+  gsap.set(butterflyShadow, { autoAlpha: 0, xPercent: -50, yPercent: -50, rotation: 0 });
+  gsap.set(butterflyShadowScaler, { scale: 0.3, transformOrigin: '50% 50%' });
+  gsap.set(butterflyShadowInner, { transformOrigin: '50% 58%' });
+  gsap.set([leftWing, shadowLeftWing], { rotationY: -18, rotationZ: -3, transformOrigin: '100% 55%' });
+  gsap.set([rightWing, shadowRightWing], { rotationY: 18, rotationZ: 3, transformOrigin: '0% 55%' });
+
+  const xTo = gsap.quickTo(butterfly, 'x', { duration: 0.18, ease: 'power3.out' });
+  const yTo = gsap.quickTo(butterfly, 'y', { duration: 0.18, ease: 'power3.out' });
+  const rotationTo = gsap.quickTo(butterfly, 'rotation', { duration: 0.28, ease: 'power3.out' });
+  const shadowXTo = gsap.quickTo(butterflyShadow, 'x', { duration: 0.22, ease: 'power3.out' });
+  const shadowYTo = gsap.quickTo(butterflyShadow, 'y', { duration: 0.22, ease: 'power3.out' });
+  const shadowRotationTo = gsap.quickTo(butterflyShadow, 'rotation', { duration: 0.34, ease: 'power3.out' });
+  let butterflyVisible = false;
+  let hasPointerPosition = false;
+  let currentScale = 0.96;
+  let currentShadowScale = 0.58;
+  let lastPointerX = 0;
+  let lastPointerY = 0;
+  let lastPointerTime = performance.now();
+
+  const wingHalfBeat = 0.34;
+  const wingFlap = gsap
+    .timeline({ paused: true, repeat: -1, defaults: { duration: wingHalfBeat, ease: 'sine.inOut' } })
+    .to([leftWing, shadowLeftWing], { rotationY: 52, rotationZ: -9 }, 0)
+    .to([rightWing, shadowRightWing], { rotationY: -52, rotationZ: 9 }, 0)
+    .to(butterflyShadowInner, { scaleX: 1.14, scaleY: 0.92, x: 5, opacity: 0.78 }, 0)
+    .to([leftWing, shadowLeftWing], { rotationY: -18, rotationZ: -3 }, wingHalfBeat)
+    .to([rightWing, shadowRightWing], { rotationY: 18, rotationZ: 3 }, wingHalfBeat)
+    .to(butterflyShadowInner, { scaleX: 0.98, scaleY: 1.04, x: 0, opacity: 1 }, wingHalfBeat);
+
+  const flightBob = gsap.to(butterflyInner, {
+    y: -5,
+    duration: 0.74,
+    ease: 'sine.inOut',
+    repeat: -1,
+    yoyo: true,
+    paused: true,
+  });
+
+  const showButterfly = () => {
+    if (butterflyVisible) {
+      return;
+    }
+
+    butterflyVisible = true;
+    document.body.classList.add('is-attention-butterfly-cursor');
+    wingFlap.play();
+    flightBob.play();
+    gsap.fromTo(
+      butterfly,
+      { autoAlpha: 0 },
+      { autoAlpha: 1, duration: 0.18, ease: 'power2.out', overwrite: 'auto' },
+    );
+    gsap.fromTo(
+      butterflyScaler,
+      { scale: 0.38 },
+      { scale: currentScale, duration: 0.28, ease: 'power4.out', overwrite: 'auto' },
+    );
+    gsap.fromTo(
+      butterflyShadow,
+      { autoAlpha: 0 },
+      { autoAlpha: 0.34, duration: 0.3, ease: 'power3.out', overwrite: 'auto' },
+    );
+    gsap.fromTo(
+      butterflyShadowScaler,
+      { scale: 0.22 },
+      { scale: currentShadowScale, duration: 0.32, ease: 'power3.out', overwrite: 'auto' },
+    );
+  };
+
+  const hideButterfly = () => {
+    if (!butterflyVisible) {
+      return;
+    }
+
+    butterflyVisible = false;
+    gsap.to(butterfly, {
+      autoAlpha: 0,
+      duration: 0.22,
+      ease: 'power2.in',
+      overwrite: 'auto',
+      onComplete: () => {
+        if (!butterflyVisible) {
+          document.body.classList.remove('is-attention-butterfly-cursor');
+          wingFlap.pause();
+          flightBob.pause();
+        }
+      },
+    });
+    gsap.to(butterflyScaler, { scale: 0.34, duration: 0.22, ease: 'power3.in', overwrite: 'auto' });
+    gsap.to(butterflyShadow, {
+      autoAlpha: 0,
+      duration: 0.22,
+      ease: 'power2.in',
+      overwrite: 'auto',
+    });
+    gsap.to(butterflyShadowScaler, { scale: 0.18, duration: 0.22, ease: 'power3.in', overwrite: 'auto' });
+  };
+
+  const updateButterfly = (event: PointerEvent) => {
+    const now = performance.now();
+    const shouldSpawnAtPointer = !hasPointerPosition || !butterflyVisible;
+
+    if (shouldSpawnAtPointer) {
+      hasPointerPosition = true;
+      lastPointerX = event.clientX;
+      lastPointerY = event.clientY;
+      lastPointerTime = now;
+      currentScale = 0.96;
+      currentShadowScale = 0.58;
+      gsap.set(butterfly, { x: event.clientX, y: event.clientY, rotation: 0 });
+      gsap.set(butterflyShadow, { x: event.clientX + 72, y: event.clientY + 30, rotation: 0 });
+      gsap.set(butterflyScaler, { scale: currentScale });
+      gsap.set(butterflyShadowScaler, { scale: currentShadowScale });
+      return;
+    }
+
+    const elapsed = Math.max(16, now - lastPointerTime);
+    const deltaX = event.clientX - lastPointerX;
+    const deltaY = event.clientY - lastPointerY;
+    const velocityX = (deltaX / elapsed) * 16.67;
+    const velocityY = (deltaY / elapsed) * 16.67;
+    const speed = Math.hypot(velocityX, velocityY);
+    const movement = Math.max(speed, Math.hypot(deltaX, deltaY));
+    const rotation = gsap.utils.clamp(-58, 58, velocityX * 0.32);
+    currentScale = gsap.utils.clamp(0.94, 1.42, 0.96 + movement * 0.012);
+    currentShadowScale = gsap.utils.clamp(0.5, 1.18, 0.58 + movement * 0.008);
+
+    xTo(event.clientX);
+    yTo(event.clientY);
+    rotationTo(rotation);
+    shadowXTo(event.clientX + 72);
+    shadowYTo(event.clientY + 30);
+    shadowRotationTo(rotation * 0.34);
+    gsap.to(butterflyScaler, {
+      scale: currentScale,
+      duration: 0.24,
+      ease: 'power3.out',
+      overwrite: 'auto',
+    });
+    gsap.to(butterflyShadow, {
+      opacity: gsap.utils.clamp(0.2, 0.38, 0.26 + movement * 0.0015),
+      duration: 0.22,
+      ease: 'power2.out',
+      overwrite: 'auto',
+    });
+    gsap.to(butterflyShadowScaler, {
+      scale: currentShadowScale,
+      duration: 0.26,
+      ease: 'power3.out',
+      overwrite: 'auto',
+    });
+
+    lastPointerX = event.clientX;
+    lastPointerY = event.clientY;
+    lastPointerTime = now;
+  };
 
   const expandedSectionRect = () => {
     const rect = section.getBoundingClientRect();
+    const verticalOutset = Math.min(Math.max(rect.height * 0.12, 36), window.innerHeight * 0.1);
     return {
-      top: rect.top - window.innerHeight * 0.1,
-      right: rect.right,
-      bottom: rect.bottom + window.innerHeight * 0.12,
-      left: rect.left,
+      top: rect.top - verticalOutset,
+      right: window.innerWidth,
+      bottom: rect.bottom + verticalOutset,
+      left: 0,
     };
   };
 
@@ -268,111 +485,39 @@ const initMarketAttentionInteraction = () => {
     });
   };
 
-  const removeGlitter = (glitter: HTMLElement, tween?: gsap.core.Animation) => {
-    const trackedTween = tween ?? glitterTweens.get(glitter);
-    trackedTween?.kill();
-    if (trackedTween) {
-      activeTweens.delete(trackedTween);
-      glitterTweens.delete(glitter);
-    }
-    activeGlitters.delete(glitter);
-    glitter.remove();
-  };
-
-  const emitGlitter = (event: PointerEvent) => {
-    const now = performance.now();
-    if (now - lastEmit < 28) {
-      return;
-    }
-
-    lastEmit = now;
-
-    const glitterCount = gsap.utils.random([2, 3]);
-
-    for (let i = 0; i < glitterCount; i += 1) {
-      if (activeGlitters.size > 64) {
-        const oldestGlitter = activeGlitters.values().next().value;
-        if (oldestGlitter) removeGlitter(oldestGlitter);
-      }
-
-      const glitter = document.createElement('span');
-      glitter.className = 'attention-glitter-particle';
-      glitter.setAttribute('aria-hidden', 'true');
-      glitter.style.setProperty('--sparkle-size', `${gsap.utils.random(5, 12)}px`);
-      glitter.style.setProperty('--sparkle-color', gsap.utils.random(glitterColors));
-      document.body.append(glitter);
-      activeGlitters.add(glitter);
-
-      const driftX = gsap.utils.random(-50, 50);
-      const driftY = gsap.utils.random(-52, 38);
-      const startScale = gsap.utils.random(0.46, 0.82);
-      const endScale = gsap.utils.random(1.35, 2.3);
-      const rotation = gsap.utils.random(-110, 110);
-      const duration = gsap.utils.random(0.62, 0.96);
-      const tween = gsap.timeline({ onComplete: () => removeGlitter(glitter, tween) });
-
-      tween.fromTo(
-        glitter,
-        {
-          x: event.clientX + gsap.utils.random(-10, 10),
-          y: event.clientY + gsap.utils.random(-10, 10),
-          scale: startScale,
-          rotation,
-          autoAlpha: 0.96,
-          filter: 'blur(0px)',
-        },
-        {
-          x: event.clientX + driftX,
-          y: event.clientY + driftY,
-          scale: endScale,
-          rotation: rotation + gsap.utils.random(-180, 180),
-          duration,
-          ease: 'power3.out',
-        },
-        0,
-      );
-
-      tween.to(
-        glitter,
-        {
-          filter: 'blur(3.6px)',
-          duration: duration * 0.48,
-          ease: 'power2.in',
-        },
-        duration * 0.36,
-      );
-
-      tween.to(
-        glitter,
-        {
-          autoAlpha: 0,
-          duration: duration * 0.62,
-          ease: 'power2.in',
-        },
-        duration * 0.3,
-      );
-
-      activeTweens.add(tween);
-      glitterTweens.set(glitter, tween);
-    }
-  };
-
   const onPointerMove = (event: PointerEvent) => {
     updateEyes(event);
     if (isInsideInteractionBand(event)) {
-      emitGlitter(event);
+      updateButterfly(event);
+      showButterfly();
+    } else {
+      hideButterfly();
     }
   };
 
   window.addEventListener('pointermove', onPointerMove, { passive: true });
+  window.addEventListener('blur', hideButterfly);
 
   return () => {
     window.removeEventListener('pointermove', onPointerMove);
-    activeTweens.forEach((tween) => tween.kill());
-    activeTweens.clear();
-    glitterTweens.clear();
-    activeGlitters.forEach((glitter) => glitter.remove());
-    activeGlitters.clear();
+    window.removeEventListener('blur', hideButterfly);
+    document.body.classList.remove('is-attention-butterfly-cursor');
+    wingFlap.kill();
+    flightBob.kill();
+    gsap.killTweensOf([
+      butterfly,
+      butterflyShadow,
+      butterflyScaler,
+      butterflyShadowScaler,
+      butterflyInner,
+      butterflyShadowInner,
+      leftWing,
+      rightWing,
+      shadowLeftWing,
+      shadowRightWing,
+    ]);
+    butterfly.remove();
+    butterflyShadow.remove();
     gsap.killTweensOf(pupils);
     gsap.set(pupils, { clearProps: 'transform' });
   };

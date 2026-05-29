@@ -596,32 +596,106 @@ a {
   will-change: transform;
 }
 
-.attention-glitter-particle {
+.is-attention-butterfly-cursor,
+.is-attention-butterfly-cursor * {
+  cursor: none !important;
+}
+
+.attention-butterfly-cursor {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 80;
+  z-index: 120;
   display: block;
-  width: var(--sparkle-size, 0.48rem);
-  height: var(--sparkle-size, 0.48rem);
-  border-radius: 999px;
-  background:
-    radial-gradient(circle, oklch(0.99 0.02 335) 0 18%, transparent 21%),
-    conic-gradient(
-      from 45deg,
-      transparent 0 13%,
-      var(--sparkle-color, oklch(0.84 0.13 345)) 14% 20%,
-      transparent 21% 38%,
-      var(--sparkle-color, oklch(0.84 0.13 345)) 39% 45%,
-      transparent 46% 100%
-    );
-  box-shadow:
-    0 0 0.55rem oklch(0.87 0.12 345 / 0.36),
-    0 0 1rem oklch(0.95 0.06 345 / 0.18);
+  width: 7.7rem;
+  height: 7.35rem;
   pointer-events: none;
   user-select: none;
   transform: translate3d(0, 0, 0);
-  will-change: opacity, transform, filter;
+  transform-style: preserve-3d;
+  perspective: 32rem;
+  will-change: opacity, transform;
+}
+
+.attention-butterfly-cursor-shadow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 119;
+  display: block;
+  width: 7.7rem;
+  height: 7.35rem;
+  filter: blur(0.6rem);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  user-select: none;
+  transform: translate3d(0, 0, 0);
+  transform-style: preserve-3d;
+  perspective: 32rem;
+  will-change: opacity, transform;
+}
+
+.attention-butterfly-cursor__scale,
+.attention-butterfly-cursor-shadow__scale {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.attention-butterfly-cursor__inner,
+.attention-butterfly-cursor-shadow__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.attention-butterfly-cursor__wing,
+.attention-butterfly-cursor__body {
+  position: absolute;
+  display: block;
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+  transform-style: preserve-3d;
+  backface-visibility: visible;
+  will-change: transform;
+}
+
+.attention-butterfly-cursor__wing--left {
+  top: 0.26rem;
+  left: 0.45rem;
+  z-index: 1;
+  width: 3.75rem;
+}
+
+.attention-butterfly-cursor__wing--right {
+  top: 0.18rem;
+  right: 0.58rem;
+  z-index: 1;
+  width: 3.45rem;
+}
+
+.attention-butterfly-cursor__body {
+  top: 1.24rem;
+  left: 50%;
+  z-index: 2;
+  width: 1.82rem;
+  filter: drop-shadow(0 0.36rem 0.56rem oklch(0.34 0.09 270 / 0.18));
+  transform: translateX(-50%) translateZ(1rem);
+}
+
+.attention-butterfly-cursor-shadow__piece {
+  opacity: 0.7;
+  filter: brightness(0) saturate(0);
+}
+
+.attention-butterfly-cursor-shadow .attention-butterfly-cursor__body {
+  filter: brightness(0) saturate(0);
 }
 
 .heading-3.topheader.herohero.downher {
