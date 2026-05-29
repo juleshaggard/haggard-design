@@ -893,7 +893,6 @@ section.footer .splitpara.jhppara.footerrr {
   --cloud-size: clamp(24rem, 42vw, 38rem);
   --face-size: clamp(2.15rem, 4vw, 4.1rem);
   position: absolute;
-  z-index: 1;
   top: 0;
   left: 50%;
   width: var(--cloud-size);
