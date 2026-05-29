@@ -439,7 +439,7 @@ a {
   min-height: clamp(4.4rem, 7vw, 5.75rem);
   padding: clamp(1.1rem, 2vw, 1.4rem) clamp(3rem, 5.2vw, 4.6rem) !important;
   color: var(--haggard-cta-text) !important;
-  font-weight: 600 !important;
+  font-weight: 400 !important;
   background: var(--haggard-cta-pink) !important;
   border: 1px solid rgba(17, 16, 15, 0.2) !important;
   box-shadow:
