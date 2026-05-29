@@ -1040,6 +1040,14 @@ section.footer .splitpara.jhppara.footerrr {
   margin: 0;
 }
 
+.projecttitle.headertitledesc.lefty.brand-leader.morework.pricing.lowerdown.svs + .div-block-27 {
+  margin-top: clamp(1rem, 2vw, 1.75rem) !important;
+}
+
+.paragraph-3.invert.serviceslist {
+  line-height: 1.95 !important;
+}
+
 .projectblock,
 .projectblocklink,
 .smallproject,
