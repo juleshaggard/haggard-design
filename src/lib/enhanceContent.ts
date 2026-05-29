@@ -250,6 +250,20 @@ function replaceAssociateCollage($: CheerioAPI) {
   });
 }
 
+function placeHomepageSmallProjects($: CheerioAPI, options: EnhanceContentOptions) {
+  if (options.currentPath !== '/') return;
+
+  const lightcone = $('a.projectblocklink[href="/projects/lightcone"]').first();
+  const pegman = $('a.projectblocklink[href="/projects/google-maps-pegman"]').first();
+
+  lightcone.add(pegman).removeClass('xl').addClass('quarter');
+
+  const aboutSection = $('#aboutmesection').first();
+  if (lightcone.length > 0 && aboutSection.length > 0) {
+    aboutSection.after(lightcone);
+  }
+}
+
 function projectSlugFromPath(path: string) {
   const match = path.match(/^\/projects\/([^/]+)\/?$/);
   return match?.[1] ?? '';
@@ -300,6 +314,7 @@ export function enhanceContentHtml(html: string, options: EnhanceContentOptions)
   enhanceLinks($);
   stripEmptyNoise($);
   replaceAssociateCollage($);
+  placeHomepageSmallProjects($, options);
   injectProjectDeliverables($, options);
   rewriteRootRelativeUrls($);
 
