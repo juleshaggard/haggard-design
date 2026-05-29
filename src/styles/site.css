@@ -971,6 +971,15 @@ a {
   overflow: visible;
 }
 
+.bigthinks .splitpara.bigthinkspara {
+  margin-bottom: clamp(0.65rem, 1vw, 0.9rem) !important;
+}
+
+.bigthinks .splitpara.bigthinkspara + .projecttitle.headertitledesc.lefty.brand-leader.hp.footer {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
 .bigthinklink {
   display: block;
   width: fit-content;
@@ -1212,6 +1221,8 @@ section.footer .splitpara.jhppara.footerrr {
 
 .div-block-31 .heading-4 {
   margin-top: 0 !important;
+  font-size: clamp(2.55rem, 3.85vw, 3rem) !important;
+  line-height: 0.99 !important;
 }
 
 .splitpara,
@@ -1582,8 +1593,8 @@ section.footer .splitpara.jhppara.footerrr {
   }
 
   .div-block-11.twoup .heading-4 {
-    font-size: clamp(2.5rem, 4.7vw, 3.5rem) !important;
-    line-height: 1.02 !important;
+    font-size: clamp(2.15rem, 4vw, 2.75rem) !important;
+    line-height: 1.01 !important;
   }
 
   .list,
@@ -1730,8 +1741,14 @@ section.footer .splitpara.jhppara.footerrr {
   }
 
   .homecontainer .aboutintro.hp.herohp.lowerdown.testimonials + .grid .text-span-7 {
-    font-size: 1.2rem !important;
-    line-height: 1.24 !important;
+    font-size: clamp(1rem, 4.7vw, 1.08rem) !important;
+    line-height: 1.4 !important;
+  }
+
+  .homecontainer .aboutintro.hp.herohp.lowerdown.testimonials + .grid .text-span-8 {
+    margin-top: 0.85rem;
+    font-size: clamp(0.9rem, 4vw, 0.98rem) !important;
+    line-height: 1.28 !important;
   }
 
   .homecontainer > .aboutintro.hp.herohp .flex-block-3 {
@@ -1974,6 +1991,11 @@ section.footer .splitpara.jhppara.footerrr {
 }
 
 @media screen and (max-width: 479px) {
+  .div-block-11.twoup .heading-4 {
+    font-size: clamp(1.9rem, 8vw, 2.15rem) !important;
+    line-height: 1.02 !important;
+  }
+
   .nav {
     position: sticky !important;
     inset: 0 0 auto !important;
@@ -2220,6 +2242,45 @@ section.footer .splitpara.jhppara.footerrr {
 .nav .navlink-label {
   font-weight: 400 !important;
   letter-spacing: 0 !important;
+}
+
+.homecontainer > .aboutintro.hp.herohp:first-child .heading-3.topheader.herohero,
+.homecontainer .aboutintro.hp.herohp.lowerdown:not(.testimonials) .heading-3.topheader.herohero.downher,
+.homecontainer .aboutintro.hp.herohp.lowerdown.testimonials .heading-3.topheader.herohero,
+#aboutmesection .projecttitle.headertitledesc.lefty.brand-leader.hp,
+.bigthinks .projecttitle.headertitledesc.lefty.brand-leader.hp.footer,
+.aboutintro:not(.hp):not(.pricing-coin) > .projecttitle.headertitledesc.lefty.brand-leader.morework,
+.homecontainer > .div-block-28:first-child > .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing:first-child {
+  max-width: 12em;
+  font-size: clamp(4.6rem, 6.1vw, 6.7rem) !important;
+  line-height: 0.96 !important;
+  white-space: normal;
+}
+
+@media screen and (max-width: 767px) {
+  .homecontainer > .aboutintro.hp.herohp:first-child .heading-3.topheader.herohero,
+  .homecontainer .aboutintro.hp.herohp.lowerdown:not(.testimonials) .heading-3.topheader.herohero.downher,
+  .homecontainer .aboutintro.hp.herohp.lowerdown.testimonials .heading-3.topheader.herohero,
+  #aboutmesection .projecttitle.headertitledesc.lefty.brand-leader.hp,
+  .bigthinks .projecttitle.headertitledesc.lefty.brand-leader.hp.footer,
+  .aboutintro:not(.hp):not(.pricing-coin) > .projecttitle.headertitledesc.lefty.brand-leader.morework,
+  .homecontainer > .div-block-28:first-child > .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing:first-child {
+    max-width: 7.1em;
+    font-size: clamp(3rem, 12vw, 4.25rem) !important;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .homecontainer > .aboutintro.hp.herohp:first-child .heading-3.topheader.herohero,
+  .homecontainer .aboutintro.hp.herohp.lowerdown:not(.testimonials) .heading-3.topheader.herohero.downher,
+  .homecontainer .aboutintro.hp.herohp.lowerdown.testimonials .heading-3.topheader.herohero,
+  #aboutmesection .projecttitle.headertitledesc.lefty.brand-leader.hp,
+  .bigthinks .projecttitle.headertitledesc.lefty.brand-leader.hp.footer,
+  .aboutintro:not(.hp):not(.pricing-coin) > .projecttitle.headertitledesc.lefty.brand-leader.morework,
+  .homecontainer > .div-block-28:first-child > .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing:first-child {
+    max-width: 6.7em;
+    font-size: clamp(2.7rem, 11.5vw, 3.25rem) !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

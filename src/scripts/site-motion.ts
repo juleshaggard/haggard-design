@@ -87,7 +87,7 @@ const initNavHoverGlow = () => {
     return () => {};
   }
 
-  const targets = [...nav.querySelectorAll<HTMLElement>('.logo, .navlink')];
+  const targets = [...nav.querySelectorAll<HTMLElement>('.logo, .navlink, .nav-cta')];
 
   if (!targets.length) {
     return () => {};
