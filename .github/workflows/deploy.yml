@@ -19,8 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ASTRO_TELEMETRY_DISABLED: "1"
-      PUBLIC_SITE_ORIGIN: https://juleshaggard.github.io
-      PUBLIC_SITE_BASE: /haggard-design
+      PUBLIC_SITE_ORIGIN: https://www.haggard.design
     steps:
       - name: Checkout
         uses: actions/checkout@v4
