@@ -30,7 +30,133 @@ const addHoverTween = (element: HTMLElement, enterVars: gsap.TweenVars, leaveVar
 };
 
 const testimonialGridSelector = '.aboutintro.hp.herohp.lowerdown.testimonials + .grid';
+const testimonialHeadingSelector = '.aboutintro.hp.herohp.lowerdown.testimonials';
 const isTestimonialCard = (element: HTMLElement) => element.matches(`${testimonialGridSelector} .paragraph-5`);
+
+const initTestimonialHeartParticles = (grid: HTMLElement) => {
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    return;
+  }
+
+  const heading = document.querySelector<HTMLElement>(testimonialHeadingSelector);
+  const activeHearts = new Set<HTMLElement>();
+  const activeTweens = new Set<gsap.core.Animation>();
+  const heartTweens = new Map<HTMLElement, gsap.core.Animation>();
+  const heartCharacters = ['💗', '💖', '💕'];
+  let lastEmit = 0;
+
+  const isInsideTestimonialBand = (event: PointerEvent) => {
+    const rects = [heading, grid]
+      .filter((element): element is HTMLElement => Boolean(element))
+      .map((element) => element.getBoundingClientRect());
+    const top = Math.min(...rects.map((rect) => rect.top));
+    const bottom = Math.max(...rects.map((rect) => rect.bottom));
+    return event.clientY >= top && event.clientY <= bottom;
+  };
+
+  const removeHeart = (heart: HTMLElement, tween?: gsap.core.Animation) => {
+    const trackedTween = tween ?? heartTweens.get(heart);
+    trackedTween?.kill();
+    if (trackedTween) {
+      activeTweens.delete(trackedTween);
+      heartTweens.delete(heart);
+    }
+    activeHearts.delete(heart);
+    heart.remove();
+  };
+
+  const emitHeart = (event: PointerEvent) => {
+    const now = performance.now();
+
+    if (now - lastEmit < 42) {
+      return;
+    }
+
+    lastEmit = now;
+
+    if (activeHearts.size > 28) {
+      const oldestHeart = activeHearts.values().next().value;
+      if (oldestHeart) removeHeart(oldestHeart);
+    }
+
+    const heart = document.createElement('span');
+    heart.className = 'testimonial-heart-particle';
+    heart.setAttribute('aria-hidden', 'true');
+    heart.textContent = gsap.utils.random(heartCharacters);
+    document.body.append(heart);
+    activeHearts.add(heart);
+
+    const driftX = gsap.utils.random(-82, 82);
+    const driftY = gsap.utils.random(-132, -58);
+    const startScale = gsap.utils.random(0.62, 0.88);
+    const endScale = gsap.utils.random(1.8, 2.7);
+    const rotation = gsap.utils.random(-28, 28);
+
+    const duration = gsap.utils.random(1.08, 1.44);
+    const tween = gsap.timeline({ onComplete: () => removeHeart(heart, tween) });
+
+    tween.fromTo(
+      heart,
+      {
+        x: event.clientX - 8,
+        y: event.clientY - 10,
+        scale: startScale,
+        rotation,
+        autoAlpha: 0.96,
+        filter: 'blur(0px)',
+      },
+      {
+        x: event.clientX + driftX,
+        y: event.clientY + driftY,
+        scale: endScale,
+        rotation: rotation + gsap.utils.random(-24, 24),
+        duration,
+        ease: 'power3.out',
+      },
+      0,
+    );
+
+    tween.to(
+      heart,
+      {
+        filter: 'blur(4.8px)',
+        duration: duration * 0.5,
+        ease: 'power2.in',
+      },
+      duration * 0.36,
+    );
+
+    tween.to(
+      heart,
+      {
+        autoAlpha: 0,
+        duration: duration * 0.66,
+        ease: 'power2.in',
+      },
+      duration * 0.28,
+    );
+
+    activeTweens.add(tween);
+    heartTweens.set(heart, tween);
+  };
+
+  const onPointerMove = (event: PointerEvent) => {
+    if (isInsideTestimonialBand(event)) {
+      emitHeart(event);
+    }
+  };
+
+  window.addEventListener('pointermove', onPointerMove, { passive: true });
+
+  cleanupListeners.push(() => {
+    window.removeEventListener('pointermove', onPointerMove);
+    activeTweens.forEach((tween) => tween.kill());
+    activeTweens.clear();
+    heartTweens.clear();
+    activeHearts.forEach((heart) => heart.remove());
+    activeHearts.clear();
+  });
+};
 
 const initTestimonials = () => {
   const grid = document.querySelector<HTMLElement>(testimonialGridSelector);
@@ -92,6 +218,8 @@ const initTestimonials = () => {
       });
     },
   });
+
+  initTestimonialHeartParticles(grid);
 };
 
 const initAssociatePortraitCloud = () => {
