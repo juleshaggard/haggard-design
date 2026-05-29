@@ -56,6 +56,11 @@ body.writingbody .postcontent {
   overflow-y: visible !important;
 }
 
+body.writingbody .writingcontainer > .leftcol > .copysection.whitebg.blackbg.futa.bigboy,
+body.writingbody .bigthinks .marquee-content.scroll.footer {
+  display: none !important;
+}
+
 img,
 video {
   max-width: 100%;
