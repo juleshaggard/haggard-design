@@ -1618,9 +1618,54 @@ section.footer .splitpara.jhppara.footerrr {
     gap: 1rem;
   }
 
+  .homecontainer > .aboutintro.hp.herohp .flex-block-7 {
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.72rem !important;
+    width: 100%;
+  }
+
+  .homecontainer > .aboutintro.hp.herohp .flex-block-7 .ctalink {
+    align-self: center;
+  }
+
   .homecontainer > .aboutintro.hp.herohp .splitpara.jhppara {
     font-size: 1rem !important;
     line-height: 1.46 !important;
+  }
+
+  .homecontainer > .aboutintro.hp.herohp .splitpara.jhppara.smallpara {
+    width: min(100%, 24rem) !important;
+    text-align: center !important;
+  }
+
+  @media (orientation: landscape) {
+    .homecontainer > .aboutintro.hp.herohp {
+      gap: 0.65rem;
+      padding-top: clamp(1.25rem, 3vh, 1.8rem) !important;
+      padding-bottom: 1.5rem !important;
+    }
+
+    .heading-3.topheader.herohero {
+      max-width: 7em;
+      font-size: clamp(3.1rem, 10.5vw, 4.3rem) !important;
+      line-height: 0.94 !important;
+    }
+
+    .homecontainer > .aboutintro.hp.herohp .flex-block-3,
+    .homecontainer > .aboutintro.hp.herohp .flex-block-7 {
+      gap: 0.48rem !important;
+    }
+
+    .homecontainer > .aboutintro.hp.herohp .flex-block-7 .ctalink {
+      min-height: 2.8rem;
+      padding: 0.72rem 1.32rem !important;
+    }
+
+    .homecontainer > .aboutintro.hp.herohp .splitpara.jhppara.smallpara {
+      line-height: 1.28 !important;
+    }
   }
 
   .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing,
@@ -1836,7 +1881,7 @@ section.footer .splitpara.jhppara.footerrr {
   }
 
   .homecontainer > .aboutintro.hp.herohp .flex-block-7 {
-    flex-direction: row !important;
+    flex-direction: column !important;
     gap: 0.75rem 1rem !important;
   }
 
