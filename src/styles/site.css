@@ -1110,18 +1110,20 @@ section.footer .splitpara.jhppara.footerrr {
   width: min(100%, 48rem) !important;
   margin-right: auto !important;
   margin-left: auto !important;
-  margin-top: clamp(0.35rem, 1.4vw, 0.9rem) !important;
+  margin-top: clamp(0.1rem, 0.8vw, 0.45rem) !important;
+  padding-top: clamp(0.6rem, 1.15vw, 1rem) !important;
+  padding-bottom: clamp(0.6rem, 1.15vw, 1rem) !important;
 }
 
 #aboutmesection .flex-block-4 {
-  --portrait-top-offset: clamp(1.7rem, 3vw, 2.65rem);
+  --portrait-top-offset: clamp(0.9rem, 1.8vw, 1.45rem);
   position: relative;
   display: grid !important;
   grid-template-columns: minmax(0, 1fr) !important;
   align-items: start !important;
   justify-items: center !important;
   width: min(100%, 48rem) !important;
-  min-height: clamp(29rem, 47vw, 38rem);
+  min-height: clamp(28rem, 43.5vw, 36rem);
   margin: 0 auto !important;
   padding-top: 0 !important;
   isolation: isolate;
@@ -1238,7 +1240,7 @@ section.footer .splitpara.jhppara.footerrr {
   z-index: 2;
   justify-self: center !important;
   align-items: center !important;
-  margin-top: 1.1rem !important;
+  margin-top: 0.85rem !important;
   text-align: center;
 }
 
