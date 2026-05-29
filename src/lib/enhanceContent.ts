@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio';
 import type { CheerioAPI } from 'cheerio';
-import type { Element } from 'domhandler';
+import type { AnyNode, Element, Text } from 'domhandler';
 import { projectDeliverables } from '../data/projectDeliverables';
 import { withBasePath } from './paths';
 import { noindexPaths, siteName } from './seo';
@@ -207,6 +207,85 @@ function enhanceHeadings($: CheerioAPI) {
   });
 }
 
+function isBreakNode(node?: AnyNode): node is Element {
+  return node?.type === 'tag' && node.name === 'br';
+}
+
+function isBlankTextNode(node?: AnyNode): node is Text {
+  return node?.type === 'text' && cleanText(node.data).length === 0;
+}
+
+function trimBodyCopySegment(segment: AnyNode[]) {
+  const trimmed = [...segment];
+
+  while (trimmed.length > 0 && (isBreakNode(trimmed[0]) || isBlankTextNode(trimmed[0]))) {
+    trimmed.shift();
+  }
+
+  while (
+    trimmed.length > 0 &&
+    (isBreakNode(trimmed[trimmed.length - 1]) || isBlankTextNode(trimmed[trimmed.length - 1]))
+  ) {
+    trimmed.pop();
+  }
+
+  return trimmed;
+}
+
+function hasReadableBodyCopy(segment: AnyNode[]) {
+  return segment.some((node) => !isBreakNode(node) && !isBlankTextNode(node));
+}
+
+function normalizeBodyCopyParagraphs($: CheerioAPI) {
+  const bodyCopySelector = [
+    'p.paragraph-3:not(.serviceslist)',
+    'p.paragraph-4',
+    'p.paragraph-5',
+    '.posttext p',
+  ].join(', ');
+
+  $(bodyCopySelector).each((_, element) => {
+    const paragraph = $(element);
+    const contents = paragraph.contents().toArray();
+    const segments: typeof contents[] = [];
+    let current: typeof contents = [];
+
+    contents.forEach((node, index) => {
+      if (isBreakNode(node)) {
+        let nextIndex = index + 1;
+
+        while (nextIndex < contents.length && isBlankTextNode(contents[nextIndex])) {
+          nextIndex += 1;
+        }
+
+        if (isBreakNode(contents[nextIndex])) {
+          const trimmed = trimBodyCopySegment(current);
+          if (hasReadableBodyCopy(trimmed)) segments.push(trimmed);
+          current = [];
+          return;
+        }
+      }
+
+      current.push(node);
+    });
+
+    const lastSegment = trimBodyCopySegment(current);
+    if (hasReadableBodyCopy(lastSegment)) segments.push(lastSegment);
+    if (segments.length < 2) return;
+
+    const replacements = $('<div></div>');
+    const attributes = paragraph.attr() ?? {};
+
+    segments.forEach((segment) => {
+      const replacement = $('<p></p>').attr(attributes);
+      segment.forEach((node) => replacement.append(node));
+      replacements.append(replacement);
+    });
+
+    paragraph.replaceWith(replacements.contents());
+  });
+}
+
 function stripEmptyNoise($: CheerioAPI) {
   $('[aria-current="page"]').each((_, element) => {
     if ($(element).attr('href')?.startsWith('mailto:')) {
@@ -356,6 +435,7 @@ export function enhanceContentHtml(html: string, options: EnhanceContentOptions)
   enhanceImages($, options);
   enhanceVideos($);
   enhanceLinks($);
+  normalizeBodyCopyParagraphs($);
   stripEmptyNoise($);
   replaceAssociateCollage($);
   placeHomepageSmallProjects($, options);

@@ -1373,6 +1373,21 @@ section.footer .splitpara.jhppara.footerrr {
   max-width: 68ch;
 }
 
+.paragraph-3:not(.serviceslist),
+.paragraph-4,
+.paragraph-5,
+.posttext p {
+  margin-top: 0 !important;
+  margin-bottom: clamp(0.9rem, 1.25vw, 1.15rem) !important;
+}
+
+.paragraph-3:not(.serviceslist):last-child,
+.paragraph-4:last-child,
+.paragraph-5:last-child,
+.posttext p:last-child {
+  margin-bottom: 0 !important;
+}
+
 .posttext h1,
 .posttext h2,
 .posttext h3 {
