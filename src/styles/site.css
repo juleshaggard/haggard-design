@@ -13,10 +13,10 @@
   --haggard-cta-focus: oklch(67% 0.2 350 / 38%);
   --haggard-page-x: 4rem;
   --haggard-section-y: 6rem;
-  --haggard-page-hero-start: clamp(5.75rem, 9vw, 7.75rem);
-  --haggard-project-hero-start: 8.5rem;
+  --haggard-page-hero-start: clamp(3rem, 5vw, 4.35rem);
+  --haggard-project-hero-start: 5.35rem;
   --haggard-pricing-coin-start: 6.5rem;
-  --haggard-writing-hero-start: 10rem;
+  --haggard-writing-hero-start: 6rem;
   --haggard-fast: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -1421,10 +1421,10 @@ section.footer .splitpara.jhppara.footerrr {
   :root {
     --haggard-page-x: 2rem;
     --haggard-section-y: 4.5rem;
-    --haggard-page-hero-start: 6.25rem;
-    --haggard-project-hero-start: 5.95rem;
+    --haggard-page-hero-start: 4rem;
+    --haggard-project-hero-start: 4rem;
     --haggard-pricing-coin-start: 5.8rem;
-    --haggard-writing-hero-start: 7.375rem;
+    --haggard-writing-hero-start: 4.25rem;
   }
 
   .leftcol .copysection.projectcopy {
