@@ -22,7 +22,7 @@
 
 html,
 body {
-  overflow-x: hidden !important;
+  overflow-x: clip !important;
 }
 
 html {
@@ -31,6 +31,12 @@ html {
 
 body {
   min-height: 100%;
+}
+
+body.maincontent,
+body.writingbody {
+  overflow-x: clip !important;
+  overflow-y: visible !important;
 }
 
 img,
@@ -169,14 +175,30 @@ a {
 }
 
 .nav {
-  z-index: 50;
+  position: sticky !important;
+  z-index: 1000;
+  top: 0;
+  width: 100%;
   align-items: center;
   gap: 1rem;
   padding: 1.4rem var(--haggard-page-x) 1rem !important;
+  background: #fff;
+  isolation: isolate;
+  overflow: visible;
+  transform: translateY(0);
+  transition:
+    background-color 180ms var(--haggard-fast),
+    transform 260ms var(--haggard-fast);
+  will-change: transform;
+}
+
+.nav.nav--hidden {
+  transform: translateY(-105%);
 }
 
 .logo {
   position: relative;
+  z-index: 1;
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
@@ -196,12 +218,41 @@ a {
   filter: none !important;
 }
 
+.nav-hover-glow {
+  position: absolute;
+  z-index: 0;
+  top: -6.6rem;
+  left: 0;
+  width: clamp(12rem, 21vw, 18rem);
+  height: 9.25rem;
+  border-radius: 999px;
+  background:
+    radial-gradient(
+      ellipse at 50% 82%,
+      oklch(91% 0.105 350 / 0.46) 0%,
+      oklch(93% 0.075 350 / 0.22) 42%,
+      oklch(97% 0.025 350 / 0) 84%
+    );
+  filter: blur(26px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(-50%, 0, 0) scale(0.92);
+  transform-origin: center;
+  will-change: transform, opacity, width;
+}
+
+.logo > *,
+.navlink-label {
+  position: relative;
+  z-index: 1;
+}
+
 .logo:hover,
 .logo:focus-visible {
   color: var(--haggard-ink);
   background: transparent !important;
-  border-color: transparent;
-  box-shadow: inset 0 0 0 1px var(--haggard-ink);
+  border: 1px solid transparent !important;
+  box-shadow: none;
   filter: none !important;
 }
 
@@ -225,6 +276,8 @@ a {
 }
 
 .div-block-29 {
+  position: relative;
+  z-index: 1;
   align-items: center;
   gap: 0.4rem;
 }
@@ -255,10 +308,21 @@ a {
 }
 
 .navlink {
+  position: relative;
+  z-index: 1;
   color: var(--haggard-ink);
   background: transparent;
   border: 1px solid transparent;
   box-shadow: inset 0 0 0 0 transparent;
+  transform: none !important;
+  transition: none !important;
+  will-change: auto;
+}
+
+.navlink-label {
+  display: block;
+  transform: none !important;
+  will-change: auto;
 }
 
 .ctalink {
@@ -270,13 +334,33 @@ a {
   border: 1px solid var(--haggard-cta-pink) !important;
 }
 
+.nav-cta {
+  width: 2.5rem;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  margin-left: 0.25rem;
+  padding: 0 !important;
+}
+
+.nav-cta-icon {
+  position: relative;
+  z-index: 2;
+  width: 1.22rem;
+  height: 1.22rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .navlink:hover,
 .navlink:focus-visible,
 .navlink.w--current {
   color: var(--haggard-ink);
   background: transparent !important;
-  border-color: transparent;
-  box-shadow: inset 0 0 0 1px var(--haggard-ink);
+  border: 1px solid transparent !important;
+  box-shadow: none;
 }
 
 .navlink:focus-visible,
@@ -1292,8 +1376,8 @@ section.footer .splitpara.jhppara.footerrr {
   }
 
   .nav {
-    position: relative !important;
-    inset: auto !important;
+    position: sticky !important;
+    inset: 0 0 auto !important;
     flex-direction: column;
     align-items: center !important;
     justify-content: center;
@@ -1613,7 +1697,8 @@ section.footer .splitpara.jhppara.footerrr {
 
 @media screen and (max-width: 479px) {
   .nav {
-    position: relative !important;
+    position: sticky !important;
+    inset: 0 0 auto !important;
     align-items: center !important;
     padding-top: 0.85rem !important;
     padding-bottom: 0.7rem !important;
@@ -1660,6 +1745,13 @@ section.footer .splitpara.jhppara.footerrr {
   .ctalink {
     min-height: 2.75rem;
     padding: 0.78rem 1rem 0.78rem 1.1rem !important;
+  }
+
+  .nav-cta {
+    width: 2.75rem;
+    min-width: 2.75rem;
+    margin-left: 0;
+    padding: 0 !important;
   }
 
   .leftcol .copysection.projectcopy {
@@ -1785,9 +1877,46 @@ section.footer .splitpara.jhppara.footerrr {
     padding-left: 0.56rem !important;
     font-size: 0.88rem !important;
   }
+
+  .nav-cta {
+    width: 2.6rem;
+    min-width: 2.6rem;
+    min-height: 2.6rem;
+    padding: 0 !important;
+  }
+}
+
+.nav .logo,
+.nav .logo:hover,
+.nav .logo:focus-visible,
+.nav .logo.w--current,
+.nav .navlink,
+.nav .navlink:hover,
+.nav .navlink:focus,
+.nav .navlink:focus-visible,
+.nav .navlink.w--current {
+  box-sizing: border-box !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: transparent !important;
+  transform: none !important;
+}
+
+.nav .navlink,
+.nav .navlink:hover,
+.nav .navlink:focus,
+.nav .navlink:focus-visible,
+.nav .navlink.w--current,
+.nav .navlink-label {
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .nav {
+    transition: none !important;
+  }
+
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation: none !important;

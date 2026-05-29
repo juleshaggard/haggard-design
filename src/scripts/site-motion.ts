@@ -30,6 +30,161 @@ const addHoverTween = (element: HTMLElement, enterVars: gsap.TweenVars, leaveVar
   });
 };
 
+const initStickyNavVisibility = () => {
+  const nav = document.querySelector<HTMLElement>('.nav');
+
+  if (!nav) {
+    return () => {};
+  }
+
+  let lastScrollY = Math.max(window.scrollY, 0);
+  let ticking = false;
+
+  const showNav = () => nav.classList.remove('nav--hidden');
+  const hideNav = () => nav.classList.add('nav--hidden');
+
+  const update = () => {
+    const currentScrollY = Math.max(window.scrollY, 0);
+    const delta = currentScrollY - lastScrollY;
+    const shouldShow = currentScrollY <= 12 || delta < -4;
+    const shouldHide = delta > 6 && currentScrollY > nav.offsetHeight;
+
+    if (shouldShow) {
+      showNav();
+    } else if (shouldHide) {
+      hideNav();
+    }
+
+    lastScrollY = currentScrollY;
+    ticking = false;
+  };
+
+  const onScroll = () => {
+    if (ticking) {
+      return;
+    }
+
+    ticking = true;
+    requestAnimationFrame(update);
+  };
+
+  nav.classList.remove('nav--hidden');
+  window.addEventListener('scroll', onScroll, { passive: true });
+  nav.addEventListener('focusin', showNav);
+
+  return () => {
+    window.removeEventListener('scroll', onScroll);
+    nav.removeEventListener('focusin', showNav);
+    nav.classList.remove('nav--hidden');
+  };
+};
+
+const initNavHoverGlow = () => {
+  const nav = document.querySelector<HTMLElement>('.nav');
+  const glow = nav?.querySelector<HTMLElement>('.nav-hover-glow');
+
+  if (!nav || !glow || reduceMotion.matches) {
+    return () => {};
+  }
+
+  const targets = [...nav.querySelectorAll<HTMLElement>('.logo, .navlink')];
+
+  if (!targets.length) {
+    return () => {};
+  }
+
+  gsap.set(glow, { xPercent: -50, opacity: 0, scale: 0.92, scaleX: 1 });
+
+  const xTo = gsap.quickTo(glow, 'x', { duration: 0.46, ease: 'power3.out' });
+  const opacityTo = gsap.quickTo(glow, 'opacity', { duration: 0.24, ease: 'power2.out' });
+  const scaleTo = gsap.quickTo(glow, 'scale', { duration: 0.32, ease: 'power3.out' });
+  const scaleXTo = gsap.quickTo(glow, 'scaleX', { duration: 0.46, ease: 'power3.out' });
+  let activeTarget: HTMLElement | null = null;
+
+  const moveGlowTo = (target: HTMLElement, event?: PointerEvent) => {
+    const navRect = nav.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    const targetCenter = targetRect.left - navRect.left + targetRect.width / 2;
+    const pointerX = event ? event.clientX - navRect.left : targetCenter;
+    const mixedX = targetCenter * 0.72 + pointerX * 0.28;
+    const scaleX = Math.min(1.34, Math.max(0.86, targetRect.width / 86));
+
+    xTo(mixedX);
+    opacityTo(1);
+    scaleTo(1);
+    scaleXTo(scaleX);
+  };
+
+  const hideGlow = () => {
+    activeTarget = null;
+    opacityTo(0);
+    scaleTo(0.94);
+    scaleXTo(0.92);
+  };
+
+  const onPointerEnter = (event: PointerEvent) => {
+    const target = event.currentTarget as HTMLElement;
+    activeTarget = target;
+    moveGlowTo(target, event);
+  };
+
+  const onPointerMove = (event: PointerEvent) => {
+    const target = event.currentTarget as HTMLElement;
+
+    if (activeTarget === target) {
+      moveGlowTo(target, event);
+    }
+  };
+
+  const onFocus = (event: FocusEvent) => {
+    const target = event.currentTarget as HTMLElement;
+    activeTarget = target;
+    moveGlowTo(target);
+  };
+
+  const onNavLeave = () => {
+    if (!nav.matches(':focus-within')) {
+      hideGlow();
+    }
+  };
+
+  const onFocusOut = () => {
+    requestAnimationFrame(() => {
+      if (!nav.matches(':focus-within')) {
+        hideGlow();
+      }
+    });
+  };
+
+  const onResize = () => {
+    if (activeTarget) {
+      moveGlowTo(activeTarget);
+    }
+  };
+
+  targets.forEach((target) => {
+    target.addEventListener('pointerenter', onPointerEnter);
+    target.addEventListener('pointermove', onPointerMove);
+    target.addEventListener('focus', onFocus);
+    target.addEventListener('blur', onFocusOut);
+  });
+  nav.addEventListener('pointerleave', onNavLeave);
+  window.addEventListener('resize', onResize);
+
+  return () => {
+    targets.forEach((target) => {
+      target.removeEventListener('pointerenter', onPointerEnter);
+      target.removeEventListener('pointermove', onPointerMove);
+      target.removeEventListener('focus', onFocus);
+      target.removeEventListener('blur', onFocusOut);
+    });
+    nav.removeEventListener('pointerleave', onNavLeave);
+    window.removeEventListener('resize', onResize);
+    gsap.killTweensOf(glow);
+    gsap.set(glow, { clearProps: 'transform,opacity' });
+  };
+};
+
 const testimonialGridSelector = '.aboutintro.hp.herohp.lowerdown.testimonials + .grid';
 const testimonialHeadingSelector = '.aboutintro.hp.herohp.lowerdown.testimonials';
 const isTestimonialCard = (element: HTMLElement) => element.matches(`${testimonialGridSelector} .paragraph-5`);
@@ -456,6 +611,8 @@ const initMotion = () => {
 
     initTestimonials();
     initAssociatePortraitCloud();
+    cleanupListeners.push(initNavHoverGlow());
+    cleanupListeners.push(initStickyNavVisibility());
     cleanupListeners.push(initCtaWebglButtons());
     requestAnimationFrame(() => ScrollTrigger.refresh());
   });
