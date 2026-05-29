@@ -7,6 +7,10 @@
   --haggard-focus: rgba(17, 16, 15, 0.28);
   --haggard-page-x: 4rem;
   --haggard-section-y: 6rem;
+  --haggard-page-hero-start: clamp(5.75rem, 9vw, 7.75rem);
+  --haggard-project-hero-start: 8.5rem;
+  --haggard-pricing-coin-start: 6.5rem;
+  --haggard-writing-hero-start: 10rem;
   --haggard-fast: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -400,11 +404,12 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: clamp(6.75rem, 11vw, 8.5rem);
-  padding-bottom: clamp(0.4rem, 1vw, 0.9rem);
+  margin-top: 0 !important;
+  padding-top: var(--haggard-pricing-coin-start) !important;
+  padding-bottom: 0 !important;
 }
 
-.homecontainer > .aboutintro:not(.hp):not(.pricing-coin) {
+.aboutintro:not(.hp):not(.pricing-coin) {
   display: flex !important;
   box-sizing: border-box;
   flex-direction: column !important;
@@ -412,13 +417,14 @@ a {
   align-items: center !important;
   gap: clamp(1.35rem, 2.2vw, 2rem);
   width: min(100%, 72rem);
+  margin-top: 0 !important;
   margin-right: auto !important;
   margin-left: auto !important;
-  padding: clamp(5.75rem, 9vw, 7.75rem) var(--haggard-page-x) clamp(4rem, 6vw, 5.25rem) !important;
+  padding: var(--haggard-page-hero-start) var(--haggard-page-x) clamp(4rem, 6vw, 5.25rem) !important;
   text-align: center;
 }
 
-.homecontainer > .aboutintro:not(.hp):not(.pricing-coin) .flex-block {
+.aboutintro:not(.hp):not(.pricing-coin) .flex-block {
   box-sizing: border-box;
   align-items: center;
   width: min(100%, 48rem);
@@ -428,7 +434,7 @@ a {
   padding-left: 0 !important;
 }
 
-.homecontainer > .aboutintro:not(.hp):not(.pricing-coin) .paragraph-4 {
+.aboutintro:not(.hp):not(.pricing-coin) .paragraph-4 {
   width: 100%;
   margin-right: auto;
   margin-left: auto;
@@ -630,8 +636,9 @@ a {
 .leftcol .copysection.projectcopy {
   align-items: center !important;
   justify-content: center !important;
+  margin-top: 0 !important;
   min-height: auto;
-  padding: clamp(7rem, 10vw, 8rem) var(--haggard-page-x) clamp(3rem, 5vw, 4rem) !important;
+  padding: var(--haggard-project-hero-start) var(--haggard-page-x) clamp(3rem, 5vw, 4rem) !important;
 }
 
 .copysection.projectcopy .div-block-12 {
@@ -782,6 +789,14 @@ section.footer .splitpara.jhppara.footerrr {
   margin-left: auto !important;
   padding-right: var(--haggard-page-x);
   padding-left: var(--haggard-page-x);
+}
+
+.homecontainer > .div-block-28:first-child {
+  padding-top: var(--haggard-page-hero-start) !important;
+}
+
+.writingcontainer .rightcol:has(.postcontent h1:first-child) {
+  margin-top: var(--haggard-writing-hero-start) !important;
 }
 
 .div-block-27 {
@@ -1116,11 +1131,15 @@ section.footer .splitpara.jhppara.footerrr {
   :root {
     --haggard-page-x: 2rem;
     --haggard-section-y: 4.5rem;
+    --haggard-page-hero-start: 6.25rem;
+    --haggard-project-hero-start: 5.95rem;
+    --haggard-pricing-coin-start: 5.8rem;
+    --haggard-writing-hero-start: 7.375rem;
   }
 
   .leftcol .copysection.projectcopy {
     min-height: auto;
-    padding-top: 7rem !important;
+    padding-top: var(--haggard-project-hero-start) !important;
     padding-bottom: 4rem !important;
   }
 
@@ -1154,6 +1173,10 @@ section.footer .splitpara.jhppara.footerrr {
 @media screen and (max-width: 767px) {
   :root {
     --haggard-page-x: 1.4rem;
+    --haggard-page-hero-start: 2.15rem;
+    --haggard-project-hero-start: 2.15rem;
+    --haggard-pricing-coin-start: 2rem;
+    --haggard-writing-hero-start: 0.875rem;
   }
 
   body.maincontent {
@@ -1237,15 +1260,23 @@ section.footer .splitpara.jhppara.footerrr {
     padding-bottom: clamp(3rem, 10vw, 4.25rem) !important;
   }
 
-  .homecontainer > .aboutintro:not(.hp):not(.pricing-coin) {
+  .aboutintro:not(.hp):not(.pricing-coin) {
     width: 100%;
-    padding-top: clamp(3rem, 10vw, 4.5rem) !important;
+    padding-top: var(--haggard-page-hero-start) !important;
     padding-bottom: clamp(2.75rem, 9vw, 4rem) !important;
   }
 
   .homecontainer > .aboutintro.pricing-coin {
-    padding-top: clamp(2.2rem, 8vw, 3.25rem) !important;
-    padding-bottom: 0.75rem !important;
+    padding-top: var(--haggard-pricing-coin-start) !important;
+    padding-bottom: 0 !important;
+  }
+
+  .homecontainer > .aboutintro.pricing-coin {
+    display: none;
+  }
+
+  .homecontainer > .aboutintro.pricing-coin + .div-block-28 {
+    padding-top: var(--haggard-page-hero-start) !important;
   }
 
   .homecontainer .aboutintro.hp.herohp.lowerdown.testimonials {
@@ -1318,6 +1349,14 @@ section.footer .splitpara.jhppara.footerrr {
     padding-left: var(--haggard-page-x) !important;
   }
 
+  .homecontainer > .div-block-28:first-child {
+    padding-top: var(--haggard-page-hero-start) !important;
+  }
+
+  .homecontainer > .div-block-28:first-child > .projecttitle.headertitledesc.lefty.brand-leader.morework:first-child {
+    margin-top: 0 !important;
+  }
+
   .div-block-27,
   .div-block-11.twoup {
     gap: clamp(2rem, 8vw, 3rem) !important;
@@ -1329,7 +1368,7 @@ section.footer .splitpara.jhppara.footerrr {
 
   .leftcol .copysection.projectcopy {
     margin-top: 0 !important;
-    padding-top: clamp(2.4rem, 9vw, 3.4rem) !important;
+    padding-top: var(--haggard-project-hero-start) !important;
     padding-bottom: clamp(2.4rem, 9vw, 3.4rem) !important;
   }
 
@@ -1351,6 +1390,10 @@ section.footer .splitpara.jhppara.footerrr {
 
   .writingcontainer .rightcol {
     margin-top: 0 !important;
+  }
+
+  .writingcontainer .rightcol:has(.postcontent h1:first-child) {
+    margin-top: var(--haggard-writing-hero-start) !important;
   }
 
   .projectblock {
@@ -1547,13 +1590,13 @@ section.footer .splitpara.jhppara.footerrr {
     padding-bottom: 3rem !important;
   }
 
-  .homecontainer > .aboutintro:not(.hp):not(.pricing-coin) {
-    padding-top: 2.8rem !important;
+  .aboutintro:not(.hp):not(.pricing-coin) {
+    padding-top: var(--haggard-page-hero-start) !important;
     padding-bottom: 3rem !important;
   }
 
   .homecontainer > .aboutintro.pricing-coin {
-    padding-top: 2rem !important;
+    padding-top: var(--haggard-pricing-coin-start) !important;
   }
 
   .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing {
