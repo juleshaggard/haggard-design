@@ -1917,6 +1917,37 @@ section.footer .splitpara.jhppara.footerrr {
     margin-top: 2.5rem !important;
   }
 
+  .bigthinks {
+    position: relative;
+    margin-top: clamp(2.5rem, 12vw, 3.25rem) !important;
+    padding-top: clamp(12.5rem, 54vw, 14.5rem) !important;
+    overflow: visible;
+  }
+
+  .bigthinks > .whale:first-child {
+    position: absolute !important;
+    inset: 0 auto auto 50% !important;
+    z-index: 0;
+    display: block !important;
+    width: clamp(5.75rem, 27vw, 6.6rem) !important;
+    height: auto !important;
+    max-width: none;
+    margin: 0 !important;
+    overflow: visible !important;
+    pointer-events: none;
+    transform: translateX(-50%) rotate(-7deg);
+    transform-origin: center;
+  }
+
+  .bigthinks > .whale.flip {
+    display: none !important;
+  }
+
+  .bigthinks > .flex-block-2 {
+    position: relative;
+    z-index: 1;
+  }
+
   .flex-block-5 {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
