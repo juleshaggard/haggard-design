@@ -988,6 +988,7 @@ body.maincontent main:has(.bigthinks) {
 .bigthinklink {
   color: inherit;
   display: block;
+  position: relative;
   width: fit-content;
   max-width: min(100%, 46rem);
   min-height: 2.75rem;
@@ -995,15 +996,28 @@ body.maincontent main:has(.bigthinks) {
   margin-left: auto;
   padding: 0.42rem 0;
   line-height: 1.15;
-  text-decoration-color: transparent;
-  text-decoration-line: underline;
-  text-decoration-thickness: 0.045em;
-  text-underline-offset: 0.16em;
-  transition: text-decoration-color 180ms ease;
+  text-decoration: none;
 }
 
-.bigthinklink:is(:hover, :focus-visible) {
-  text-decoration-color: currentColor;
+.bigthinklink::after {
+  position: absolute;
+  right: 0;
+  bottom: 0.34rem;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  opacity: 0;
+  transform: scaleX(0.72);
+  transform-origin: center;
+  transition:
+    opacity 180ms ease,
+    transform 220ms var(--haggard-fast);
+}
+
+.bigthinklink:is(:hover, :focus-visible)::after {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
 .bigthinks .marquee-content.scroll.footer {
