@@ -556,7 +556,7 @@ a {
 
 .bigthinks {
   max-width: 100vw;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .bigthinklink {
