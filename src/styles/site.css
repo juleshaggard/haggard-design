@@ -1029,6 +1029,17 @@ section.footer .splitpara.jhppara.footerrr {
   text-wrap: pretty;
 }
 
+.splitpara:not(.serviceslist) br + br,
+.paragraph-3:not(.serviceslist) br + br,
+.paragraph-4 br + br,
+.paragraph-5 br + br,
+.posttext p br + br {
+  display: block;
+  content: "";
+  height: clamp(1.15rem, 1.6vw, 1.45rem);
+  margin: 0;
+}
+
 .projectblock,
 .projectblocklink,
 .smallproject,
