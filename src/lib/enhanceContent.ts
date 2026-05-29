@@ -255,12 +255,17 @@ function placeHomepageSmallProjects($: CheerioAPI, options: EnhanceContentOption
 
   const lightcone = $('a.projectblocklink[href="/projects/lightcone"]').first();
   const pegman = $('a.projectblocklink[href="/projects/google-maps-pegman"]').first();
+  const marketAttention = $('.aboutintro.hp.herohp.lowerdown').not('.testimonials').first();
 
   lightcone.add(pegman).removeClass('xl').addClass('quarter');
 
   const aboutSection = $('#aboutmesection').first();
   if (lightcone.length > 0 && aboutSection.length > 0) {
     aboutSection.after(lightcone);
+  }
+
+  if (marketAttention.length > 0 && pegman.length > 0) {
+    pegman.after(marketAttention);
   }
 }
 
