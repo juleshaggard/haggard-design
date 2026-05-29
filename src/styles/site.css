@@ -33,9 +33,26 @@ body {
   min-height: 100%;
 }
 
-body.maincontent,
+body.maincontent {
+  overflow-x: clip !important;
+  overflow-y: visible !important;
+}
+
+html:has(body.writingbody) {
+  overflow-y: auto !important;
+}
+
 body.writingbody {
   overflow-x: clip !important;
+  overflow-y: clip !important;
+}
+
+body.writingbody main,
+body.writingbody .writingcontainer,
+body.writingbody .leftcol,
+body.writingbody .rightcol,
+body.writingbody .postcontent {
+  max-height: none !important;
   overflow-y: visible !important;
 }
 

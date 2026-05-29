@@ -21,12 +21,15 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props as { entry: MigratedEntry };
 const html = readFileSync(path.join(process.cwd(), 'src', 'content-html', entry.data.htmlFile), 'utf-8');
+const bodyClass = Array.from(
+  new Set([entry.collection === 'writing' ? 'writingbody' : '', entry.data.bodyClass].filter(Boolean)),
+).join(' ');
 ---
 
 <BaseLayout
   title={entry.data.title}
   description={entry.data.description}
-  bodyClass={entry.data.bodyClass}
+  bodyClass={bodyClass}
   currentPath={entry.data.path}
   ogImage={entry.data.ogImage}
 >
