@@ -250,14 +250,53 @@ function replaceAssociateCollage($: CheerioAPI) {
   });
 }
 
+function createPagodaHomepageCard($: CheerioAPI) {
+  const poster = '/assets/site/fa92040502-6269e5f9ec05564399a0d757_App-screen-02_2lighter-poster-00001.webp';
+  const videoSrc = '/assets/site/f4e4e12ee1-6269e5f9ec05564399a0d757_App-screen-02_2lighter-transcode.mp4';
+  const card = $('<a></a>')
+    .addClass('projectblocklink quarter w-inline-block')
+    .attr({
+      'data-tilt': '0',
+      href: '/projects/pagoda',
+    });
+  const media = $('<div></div>')
+    .addClass('projectimg projectvid w-background-video w-background-video-atom')
+    .attr('aria-hidden', 'true');
+  const video = $('<video></video>').attr({
+    autoplay: '',
+    loop: '',
+    muted: '',
+    playsinline: '',
+    preload: 'metadata',
+    tabindex: '-1',
+    'aria-hidden': 'true',
+    disablepictureinpicture: '',
+    poster,
+  });
+
+  video.append($('<source>').attr('src', videoSrc));
+  media.append(video);
+  card.append(media);
+  card.append($('<h2></h2>').addClass('projecttitle').text('Pagoda'));
+  card.append($('<p></p>').addClass('homepageprojects center').text('The first Web3 dev platform'));
+
+  return card;
+}
+
 function placeHomepageSmallProjects($: CheerioAPI, options: EnhanceContentOptions) {
   if (options.currentPath !== '/') return;
 
   const lightcone = $('a.projectblocklink[href="/projects/lightcone"]').first();
   const pegman = $('a.projectblocklink[href="/projects/google-maps-pegman"]').first();
+  const ibmWatson = $('a.projectblocklink[href="/projects/ibm-watson"]').first();
+  const pagoda = $('a.projectblocklink[href="/projects/pagoda"]').first();
   const marketAttention = $('.aboutintro.hp.herohp.lowerdown').not('.testimonials').first();
 
   lightcone.add(pegman).removeClass('xl').addClass('quarter');
+
+  if (ibmWatson.length > 0 && pagoda.length === 0) {
+    ibmWatson.after(createPagodaHomepageCard($));
+  }
 
   const aboutSection = $('#aboutmesection').first();
   if (lightcone.length > 0 && aboutSection.length > 0) {
