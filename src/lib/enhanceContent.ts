@@ -321,6 +321,78 @@ function stripEmptyNoise($: CheerioAPI) {
   });
 }
 
+function formatServiceItem(value: string) {
+  return cleanText(value).replace(/^(?:⚑|•|-)+\s*/, '').trim();
+}
+
+function serviceItemsFromParagraph($: CheerioAPI, element: Element, title: string) {
+  const items: string[] = [];
+  let current = '';
+
+  const pushCurrent = () => {
+    const item = formatServiceItem(current);
+    current = '';
+
+    if (item.length > 0 && item.toLowerCase() !== title.toLowerCase()) {
+      items.push(item);
+    }
+  };
+
+  $(element)
+    .contents()
+    .each((_, node) => {
+      if (node.type === 'tag' && node.name === 'br') {
+        pushCurrent();
+        return;
+      }
+
+      if (node.type === 'tag' && $(node).hasClass('boldtextpara')) {
+        return;
+      }
+
+      if (node.type === 'text') {
+        current += node.data;
+        return;
+      }
+
+      current += $(node).text();
+    });
+
+  pushCurrent();
+
+  return items;
+}
+
+function formatServicePills($: CheerioAPI) {
+  $('p.serviceslist').each((_, element) => {
+    const paragraph = $(element);
+    const sourceText = paragraph.text();
+
+    if (!sourceText.includes('⚑')) return;
+
+    const title = cleanText(paragraph.find('.boldtextpara').first().text());
+    if (!title) return;
+
+    const items = serviceItemsFromParagraph($, element, title);
+    if (items.length === 0) return;
+
+    const serviceId = `service-pill-${title.toLowerCase()}`;
+    const group = $('<section></section>').addClass('service-pill-group').attr('aria-labelledby', serviceId);
+
+    group.append($('<h3></h3>').addClass('service-pill-group__title').attr('id', serviceId).text(title));
+
+    const list = $('<ul></ul>').addClass('service-pill-list');
+    items.forEach((item) => {
+      list.append($('<li></li>').append($('<span></span>').addClass('service-pill').text(item)));
+    });
+    group.append(list);
+
+    paragraph.closest('.div-block-27').addClass('services-pill-grid');
+    paragraph.closest('.div-block-11').addClass('service-pill-column');
+    paragraph.replaceWith(group);
+  });
+}
+
 function replaceAssociateCollage($: CheerioAPI) {
   $('#aboutmesection .image-18').each((_, element) => {
     const cloud = $('<div></div>')
@@ -498,6 +570,7 @@ export function enhanceContentHtml(html: string, options: EnhanceContentOptions)
   enhanceLinks($);
   normalizeBodyCopyParagraphs($);
   stripEmptyNoise($);
+  formatServicePills($);
   replaceAssociateCollage($);
   placeHomepageSmallProjects($, options);
   formatHomepageMarketAttentionCopy($, options);

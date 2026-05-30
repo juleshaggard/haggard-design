@@ -1358,6 +1358,80 @@ section.footer .splitpara.jhppara.footerrr {
   margin-top: clamp(2.6rem, 4vw, 4rem) !important;
 }
 
+.projecttitle.headertitledesc.lefty.brand-leader.morework.pricing.lowerdown.svs {
+  width: 100%;
+  margin-top: clamp(4.5rem, 8vw, 6.5rem) !important;
+  margin-bottom: clamp(1.35rem, 2.4vw, 2rem) !important;
+  padding-left: 0 !important;
+  text-align: center !important;
+}
+
+.div-block-27.services-pill-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start !important;
+  gap: clamp(1.2rem, 3vw, 2.6rem) !important;
+  width: min(100%, 70rem);
+  margin: 0 auto clamp(5rem, 7vw, 6.75rem) !important;
+}
+
+.div-block-27.services-pill-grid .service-pill-column {
+  display: flex;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.service-pill-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: clamp(0.95rem, 1.6vw, 1.25rem);
+  text-align: center;
+}
+
+.service-pill-group__title {
+  margin: 0;
+  color: var(--haggard-ink);
+  font-family: "Instrument Serif", serif;
+  font-size: clamp(2.2rem, 3.2vw, 3.1rem);
+  font-weight: 400;
+  line-height: 0.96;
+  text-wrap: balance;
+}
+
+.service-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.58rem 0.48rem;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.service-pill-list li {
+  margin: 0;
+  padding: 0;
+}
+
+.service-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.24rem;
+  padding: 0.58rem 0.86rem 0.62rem;
+  color: var(--haggard-ink);
+  background: color-mix(in srgb, #fff 96%, #ffcde2 4%);
+  border: 1px solid rgba(17, 16, 15, 0.15);
+  border-radius: 999px;
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 .div-block-31 .heading-4 {
   margin-top: 0 !important;
   font-size: clamp(2.55rem, 3.85vw, 3rem) !important;
@@ -1731,6 +1805,19 @@ section.footer .splitpara.jhppara.footerrr {
     font-size: 5rem !important;
   }
 
+  .div-block-27.services-pill-grid {
+    grid-template-columns: 1fr;
+    gap: 2.15rem !important;
+    width: min(100%, 34rem);
+    margin-bottom: 4.75rem !important;
+  }
+
+  .service-pill-list {
+    max-width: 30rem;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
   .div-block-11.twoup .heading-4 {
     font-size: clamp(2.15rem, 4vw, 2.75rem) !important;
     line-height: 1.01 !important;
@@ -1880,14 +1967,14 @@ section.footer .splitpara.jhppara.footerrr {
   }
 
   .homecontainer .aboutintro.hp.herohp.lowerdown.testimonials + .grid .text-span-7 {
-    font-size: clamp(1rem, 4.7vw, 1.08rem) !important;
-    line-height: 1.4 !important;
+    font-size: clamp(0.86rem, 4vw, 0.96rem) !important;
+    line-height: 1.36 !important;
   }
 
   .homecontainer .aboutintro.hp.herohp.lowerdown.testimonials + .grid .text-span-8 {
     margin-top: 0.85rem;
-    font-size: clamp(0.9rem, 4vw, 0.98rem) !important;
-    line-height: 1.28 !important;
+    font-size: clamp(0.82rem, 3.5vw, 0.9rem) !important;
+    line-height: 1.25 !important;
   }
 
   .homecontainer > .aboutintro.hp.herohp .flex-block-3 {
@@ -1966,8 +2053,28 @@ section.footer .splitpara.jhppara.footerrr {
   }
 
   .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing.lowerdown.svs {
+    margin-top: 3.25rem !important;
+    margin-bottom: 1.3rem !important;
     padding-left: 0 !important;
     text-align: center !important;
+  }
+
+  .service-pill-group {
+    gap: 0.85rem;
+  }
+
+  .service-pill-group__title {
+    font-size: clamp(2rem, 9vw, 2.45rem);
+  }
+
+  .service-pill-list {
+    gap: 0.5rem 0.42rem;
+  }
+
+  .service-pill {
+    min-height: 2.12rem;
+    padding: 0.54rem 0.76rem 0.58rem;
+    font-size: 0.9rem;
   }
 
   .div-block-28 {
@@ -2396,6 +2503,11 @@ section.footer .splitpara.jhppara.footerrr {
   white-space: normal;
 }
 
+.projecttitle.headertitledesc.lefty.brand-leader.morework.pricing.lowerdown {
+  font-size: clamp(4.6rem, 6.1vw, 6.7rem) !important;
+  line-height: 0.96 !important;
+}
+
 @media screen and (max-width: 767px) {
   .homecontainer > .aboutintro.hp.herohp:first-child .heading-3.topheader.herohero,
   .homecontainer .aboutintro.hp.herohp.lowerdown:not(.testimonials) .heading-3.topheader.herohero.downher,
@@ -2405,6 +2517,10 @@ section.footer .splitpara.jhppara.footerrr {
   .aboutintro:not(.hp):not(.pricing-coin) > .projecttitle.headertitledesc.lefty.brand-leader.morework,
   .homecontainer > .div-block-28:first-child > .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing:first-child {
     max-width: 7.1em;
+    font-size: clamp(3rem, 12vw, 4.25rem) !important;
+  }
+
+  .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing.lowerdown {
     font-size: clamp(3rem, 12vw, 4.25rem) !important;
   }
 }
@@ -2418,6 +2534,10 @@ section.footer .splitpara.jhppara.footerrr {
   .aboutintro:not(.hp):not(.pricing-coin) > .projecttitle.headertitledesc.lefty.brand-leader.morework,
   .homecontainer > .div-block-28:first-child > .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing:first-child {
     max-width: 6.7em;
+    font-size: clamp(2.7rem, 11.5vw, 3.25rem) !important;
+  }
+
+  .projecttitle.headertitledesc.lefty.brand-leader.morework.pricing.lowerdown {
     font-size: clamp(2.7rem, 11.5vw, 3.25rem) !important;
   }
 }
