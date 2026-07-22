@@ -31,12 +31,15 @@ const associateFaces = Array.from({ length: 9 }, (_, index) => {
 });
 
 const homepageFeaturedProjects = [
-  { href: '/projects/arcee-ai', title: 'Arcee.AI' },
-  { href: '/projects/rightcapital', title: 'Right Capital' },
-  { href: '/projects/frank', title: 'Frank' },
-  { href: '/projects/airbnb', title: 'Airbnb' },
-  { href: '/projects/prometheus-group', title: 'Prometheus Group' },
   { href: '/projects/ibm-watson', title: 'IBM Watson' },
+  { href: '/projects/airbnb', title: 'Airbnb' },
+  { href: '/projects/chase-travel', title: 'Chase Travel' },
+  { href: '/projects/beats-by-dre', title: 'Beats by Dre' },
+  { href: '/projects/apple', title: 'Apple' },
+  { href: '/projects/google-maps-pegman', title: 'Google Maps Pegman' },
+  { href: '/projects/vita', title: 'Vita' },
+  { href: '/projects/bizzabo', title: 'Bizzabo' },
+  { href: '/projects/liveramp', title: 'LiveRamp' },
 ];
 
 const homepageLeadProject = { href: '/projects/notebook-lm-google', title: 'NotebookLM' };
