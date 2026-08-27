@@ -35,4 +35,4 @@ This site uses repo content as the CMS:
 - The current case-study rewrite lives in `scripts/rewrite-case-studies.mjs`, so Codex can keep the language consistent after future migrations.
 - The sentence-case cleanup lives in `scripts/enforce-sentence-case.mjs`; acronyms and initialisms stay capitalized.
 
-The current migration includes all sitemap routes plus `/projects/beats-by-dre`, which is linked publicly but password-protected on the live Webflow site.
+The current migration includes all sitemap routes plus the rebuilt `/projects/beats-by-dre` case study.

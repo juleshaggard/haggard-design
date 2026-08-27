@@ -6,7 +6,7 @@ import * as cheerio from 'cheerio';
 const ROOT = process.cwd();
 const DIST_ROOT = path.join(ROOT, 'dist');
 const CONTENT_ROOT = path.join(ROOT, 'src', 'content');
-const NOINDEX_PATHS = new Set(['/pricing-old-copy', '/projects/beats-by-dre']);
+const NOINDEX_PATHS = new Set(['/pricing-old-copy', '/homepage-test', '/type-specimen']);
 const BASE_PATH = (process.env.PUBLIC_SITE_BASE ?? '').replace(/\/$/, '');
 
 const blockedStrings = [

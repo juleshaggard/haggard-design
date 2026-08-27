@@ -36,8 +36,8 @@ export const projectDeliverables: Record<string, ProjectDeliverableRecap> = {
   },
   'beats-by-dre': {
     summary:
-      'The protected work packaged a confidential retail experience into a polished visual system built for clarity, energy, and brand consistency.',
-    items: ['Confidential product visuals', 'Retail experience design', 'Interface direction', 'Presentation assets'],
+      'The retail app gives shoppers and store staff one place to compare the Beats lineup by fit, sound, battery life, and color.',
+    items: ['Retail experience strategy', 'Comparison UX', 'Interface design', 'Product motion'],
   },
   beautiful: {
     summary:

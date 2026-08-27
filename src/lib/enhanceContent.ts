@@ -45,6 +45,9 @@ const homepageFeaturedProjects = [
 const homepageLeadProject = { href: '/projects/notebook-lm-google', title: 'NotebookLM' };
 
 const knownProjectCardHrefs = new Map([['Prometheus Group', '/projects/prometheus-group']]);
+const knownProjectCardDescriptions = new Map([
+  ['Beats by Dre', 'Compare the Beats lineup at a glance'],
+]);
 
 let allWorkDocument: CheerioAPI | null = null;
 
@@ -479,8 +482,12 @@ function projectCardTitle($: CheerioAPI, element: Element) {
 
 function fixKnownProjectCardHrefs($: CheerioAPI) {
   $('a.projectblocklink').each((_, element) => {
-    const fixedHref = knownProjectCardHrefs.get(projectCardTitle($, element));
+    const title = projectCardTitle($, element);
+    const fixedHref = knownProjectCardHrefs.get(title);
+    const description = knownProjectCardDescriptions.get(title);
+
     if (fixedHref) $(element).attr('href', fixedHref);
+    if (description) $(element).find('.homepageprojects.center').first().text(description);
   });
 }
 
